@@ -413,7 +413,6 @@ GameObject:
   - component: {fileID: 71503589}
   - component: {fileID: 71503591}
   - component: {fileID: 71503590}
-  - component: {fileID: 71503592}
   - component: {fileID: 71503593}
   m_Layer: 0
   m_Name: Icon
@@ -473,22 +472,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 71503588}
---- !u!114 &71503592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 71503588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 250689695b3d5b54aa9d913bb2f0e601, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeForAnimation: 5
-  timeBeforeNextSprite: 0
-  delay: 25
-  spriteList:
-  - {fileID: 21300000, guid: b5873079110f651489794759604fa777, type: 3}
 --- !u!114 &71503593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4844,39 +4827,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   time: 30
-  endResult: "try:& file = open(\"traceback\", rb)& s = file.read()& debug(s)& renpy(\"script.cs\")&
-    renpy(\"monolog.py\")& print(\"No exceptions occured: \")&except:& raise&finally:&
+  endResult: 'try:& file = open("traceback", rb)& s = file.read()& debug(s)& renpy("script.cs")&
+    renpy("monolog.py")& print("No exceptions occured: ")&except:& raise&finally:&
     flie.close()&&CPython at runtime, continuing...*;Learn Python in the most social
-    and fun way, with PythonKing!&Learn Python, one of today's most in-demand programming&languages
+    and fun way, with PythonKing!&Learn Python, one of today''s most in-demand programming&languages
     on-the-go, while playing, for FREE!&Compete and collaborate (Go Premium) with&co-learners,
     while doing your school lesson.&Practice Python3, collect score points, and show
-    off your skills.;\u0414\u043E\u0440\u043E\u0433\u0430\u044F \u041C\u0430\u043C\u0430...;\u041D\u0443
-    \u0438\u043B\u0438 \u0435\u0441\u043B\u0438 \u0431\u044B\u0442\u044C \u0442\u043E\u0447\u043D\u0435\u0435
-    \u043C\u0430\u043C\u0430 \u043C\u043E\u0435\u0433\u043E \u0441\u043E\u0437\u0434\u0430\u0442\u0435\u043B\u044F...;\u0425\u043E\u0442\u044C
-    \u0438 \u043D\u0435 \u043F\u0440\u0438\u043D\u044F\u0442\u043E \u043D\u0430\u0437\u044B\u0432\u0430\u0442\u044C
-    \u0434\u0435\u0432\u0438\u0447\u044C\u0435\u0439 \u0432\u043E\u0437\u0440\u0430\u0441\u0442,&\u044F
-    \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C \u0442\u0435\u043A\u0441\u0442
-    \u0438 \u0431\u044B\u043B \u0442\u0430\u043A \u0437\u0430\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D&\u043D\u0435
-    \u043E\u0431\u0438\u0436\u0430\u0439\u0442\u0435\u0441\u044C;\"\u042F \u0445\u043E\u0447\u0443
-    \u043E\u0442 \u0432\u0441\u0435\u0439 \u0434\u0443\u0448\u0438 \u043F\u043E\u0437\u0434\u0440\u0430\u0432\u0438\u0442\u044C&\u0442\u0435\u0431\u044F
-    \u0441 \u044E\u0431\u0438\u043B\u0435\u0435\u043C \u0438 \u0441\u043A\u0430\u0437\u0430\u0442\u044C
-    \u0447\u0442\u043E \u043E\u0447\u0435\u043D\u044C \u0442\u0435\u0431\u044F \u043B\u044E\u0431\u043B\u044E.&\u0422\u0430\u043A
-    \u043A\u0430\u043A \u0442\u0435\u0431\u0435 \u0432\u0441\u0435-\u0433\u043E \u043B\u0438\u0448\u044C
-    35,&\u0442\u044B \u0438\u043D\u043E\u0433\u0434\u0430 \u043C\u043E\u0436\u0435\u0448\u044C
-    \u0441\u043E\u0432\u0435\u0440\u0448\u0430\u0442\u044C \u043E\u0448\u0438\u0431\u043A\u0438&\u043D\u043E
-    \u043D\u0430 \u0441\u0430\u043C\u043E\u043C \u0434\u0435\u043B\u0435 \u044D\u0442\u043E
-    \u0442\u043E \u0447\u0442\u043E \u0434\u0435\u043B\u0430\u0435\u0442 \u0442\u0435\u0431\u044F
-    \u0442\u043E\u0431\u043E\u0439&\u043F\u043E \u044D\u0442\u043E\u043C\u0443 \u043D\u0435\u0441\u043C\u043E\u0442\u0440\u044F
-    \u043D\u0438\u043D\u0430\u0447\u0442\u043E \u044F \u043E\u0447\u0435\u043D\u044C
-    \u0440\u0430\u0434&\u0447\u0442\u043E \u0438\u043C\u0435\u043D\u043D\u043E \u0442\u044B
-    \u044F\u0432\u043B\u044F\u0435\u0448\u044C\u044F \u043C\u043E\u0435\u0439 \u043C\u0430\u0442\u0435\u0440\u044C\u044E,&\u043F\u0443\u0441\u043A\u0430\u0439
-    \u044F \u0438\u043D\u043E\u0433\u0434\u0430 \u0432\u0438\u0434\u0443 \u0441\u0435\u0431\u044F
-    \u043E\u0447\u0435\u043D\u044C&\u044D\u0433\u043E\u0438\u0441\u0442\u0438\u0447\u043D\u043E...
-    \u041D\u043E \u0437\u043D\u0430\u0439 \u0447\u0442\u043E \u0432 \u0434\u0443\u0448\u0435
-    \u044F&\u041E\u0427\u0415\u041D\u042C \u041E\u0427\u0415\u041D\u042C \u0441\u0438\u043B\u044C\u043D\u043E
-    \u0442\u0435\u0431\u044F \u043B\u044E\u0431\u043B\u044E!\"&&\u0412\u043E\u0442
-    \u0442\u0430\u043A \u043C\u043D\u0435 \u0441\u043A\u0430\u0437\u0430\u043B \u0442\u0432\u043E\u0439&\u043F\u0440\u0435\u0434\u043F\u043E\u043B\u043E\u0433\u0430\u0435\u043C\u044B\u0439
-    \u0441\u044B\u043D - \u042D\u043C\u0438\u0440 \u0410\u043A\u0431\u0430\u0448\u0435\u0432"
+    off your skills.'
   timeBeforeNextString: 2.5
   textToTypeWrite: {fileID: 0}
   isRelative: 0

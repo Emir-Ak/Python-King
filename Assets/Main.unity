@@ -377,63 +377,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questions:
-  - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum blandit non
-    ligula et sodales. In sed est nibh. Duis in feugiat augue. Ut consequat mauris
-    ac est faucibus, nec consectetur libero finibus. In sit amet metus tempor sem
-    placerat lacinia at nec nibh. Donec in viverra felis. Maecenas a dolor sit amet
-    dolor sagittis rhoncus sit amet at neque. Nullam dictum in tortor a bibendum.
-    Donec sed purus auctor, suscipit ligula a, laoreet sapien.
-  - Praesent vitae orci fringilla, porta enim vitae, interdum enim. Curabitur at tincidunt
-    metus, non tempor nisl. Suspendisse viverra sodales odio, in suscipit ante porttitor
-    imperdiet. Mauris egestas metus felis, quis faucibus arcu lacinia sed. Sed efficitur,
-    odio id vestibulum pulvinar, nisl ante condimentum erat, ac porttitor est mi vitae
-    nunc. Curabitur tristique sapien quis ipsum eleifend sodales. Aliquam id sem gravida
-    libero eleifend cursus vel vitae augue. Sed rutrum dolor nec rhoncus fringilla.
-    Vestibulum a varius sem. Cras vehicula ante nec lacinia consequat. Phasellus ultrices,
-    metus eu sagittis dapibus, nisi lacus faucibus turpis, et volutpat odio nunc eu
-    tortor. Integer vel aliquet ante.
-  - Sed rutrum nunc vitae nibh pellentesque lobortis. Cras ut euismod ligula. Curabitur
-    suscipit massa vitae fringilla placerat. Aenean sed nisi tincidunt, placerat leo
-    ac, congue libero. Etiam ante risus, blandit nec metus in, ornare pulvinar est.
-    Mauris at ultrices mauris. Sed nunc sapien, tincidunt quis libero quis, gravida
-    vehicula ligula.
-  - Cras et velit maximus, vulputate erat nec, aliquam velit. Suspendisse iaculis
-    massa mi, vitae ultrices odio commodo a. Donec lectus sem, vehicula ac imperdiet
-    quis, dignissim et nisi. Nam feugiat vestibulum risus, dictum gravida risus vehicula
-    eu. Proin et pharetra lectus. Aliquam condimentum at nisi in consectetur. Morbi
-    id egestas felis. Curabitur ut arcu tempor, volutpat libero in, scelerisque leo.
-    Maecenas porttitor, quam ut fermentum lacinia, mi ex malesuada tellus, eleifend
-    imperdiet ex arcu et nunc. Phasellus ut magna maximus velit ornare hendrerit.
-    Integer sodales risus ac erat suscipit egestas. Etiam eget ultricies mi. Nunc
-    eros nisl, placerat at nibh vel, faucibus luctus sapien. Duis sodales rutrum diam,
-    viverra vehicula sem gravida elementum. Donec semper fermentum dapibus. Duis mollis
-    ligula felis, vel condimentum felis ultrices at.
-  - 'Vestibulum luctus ut dui eu commodo. Nam tincidunt orci vel justo lacinia molestie.
-    Vestibulum enim mi, congue a enim quis, bibendum semper nulla. Quisque dolor velit,
-    rutrum non nisi iaculis, pellentesque convallis risus. Nulla nec condimentum tellus.
-    Nam quis augue ultricies, vehicula dui nec, varius nisl. Vivamus convallis ac
-    diam ac luctus. Duis vel orci maximus, pharetra sem id, posuere purus. Nam elementum
-    tellus non turpis molestie, nec congue ante facilisis. Integer auctor tortor sed
-    ante gravida elementum. Vestibulum placerat lacus in augue porttitor pellentesque.
-    Duis eu pulvinar libero, non volutpat quam. Ut quis rhoncus lacus, quis molestie
-    libero. Nulla consequat scelerisque porttitor. Duis quis neque eu lectus elementum
-    sodales.  '
-  - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-    unknown printer took a galley of type and scrambled it to make a type specimen
-    book. It has survived not only five centuries, but also the leap into electronic
-    typesetting, remaining essentially unchanged. It was popularised in the 1960s
-    with the release of Letraset sheets containing Lorem Ipsum passages, and more
-    recently with desktop publishing software like Aldus PageMaker including versions
-    of Lore
-  - 34234
-  - Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-    in a piece of classical Latin literature from 45 BC, making it over 2000 years
-    old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,
-    looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
-    passage, and going through the cites of the word in classica
+  - pythonQuestion: 1+5
+    solution: 6
+  - pythonQuestion: 2-(-6)
+    solution: 8
+  - pythonQuestion: 3+4
+    solution: 7
+  - pythonQuestion: 22*3
+    solution: 66
+  - pythonQuestion: 77-7+8
+    solution: 78
+  - pythonQuestion: 'Does Stephan watch hentai?;(HINT: He does...)'
+    solution: Yes
   currentQuestionText: {fileID: 867145445}
-  timeAvailable: 5
+  timeAvailable: 10
+  answerField: {fileID: 2107964377}
+  correctAnswersDisplay: {fileID: 1909766040}
   timeBar: {fileID: 1389167456}
 --- !u!1 &867145443
 GameObject:
@@ -446,7 +405,7 @@ GameObject:
   - component: {fileID: 867145446}
   - component: {fileID: 867145445}
   m_Layer: 5
-  m_Name: CurrentQuestion
+  m_Name: CurrentQuestionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,7 +426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -3.9, y: -150}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 338.2, y: 185.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &867145445
@@ -491,7 +450,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e53f57a9b1933d543a6cb4e4e2e28cf6, type: 3}
-    m_FontSize: 10
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -825,6 +784,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1897551564}
+--- !u!1 &1909766039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1909766042}
+  - component: {fileID: 1909766041}
+  - component: {fileID: 1909766040}
+  m_Layer: 5
+  m_Name: CorrectAnswersText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1909766040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909766039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: e53f57a9b1933d543a6cb4e4e2e28cf6, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0/7
+--- !u!222 &1909766041
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909766039}
+--- !u!224 &1909766042
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909766039}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2107964376}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 16.19, y: 0}
+  m_SizeDelta: {x: 32.38, y: 30.2}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2046645030
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.95000005, y: 0.8}
-  m_AnchoredPosition: {x: 4, y: 1.5}
+  m_AnchoredPosition: {x: 4, y: 3.0564451}
   m_SizeDelta: {x: -12, y: -7.0729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2046645032
@@ -929,6 +962,7 @@ RectTransform:
   m_Children:
   - {fileID: 2046645031}
   - {fileID: 410633163}
+  - {fileID: 1909766042}
   m_Father: {fileID: 708615979}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

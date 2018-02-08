@@ -2,10 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public static class TypeWriter
+public class TypeWriter
 {
-    public static bool TypingIstFinished;
+    public static bool TypingIsFinished;
 
+    #region Description
     //Description of the static method (can be non-static method description)
     /// <summary>
     /// Creates effect on a text that makes it look like it is being typed in!
@@ -16,9 +17,11 @@ public static class TypeWriter
     /// <param name="character">Character which won't be typed in, but will put a following text on to a new line</param>
     /// <param name="relative">Would text to take effect on be relative to existing text (or should original text be deleted)?</param>
     /// <param name="delay">Time on seconds before effect will take place</param>
+    #endregion
     public static IEnumerator TypeWrite(Text text, string result, float time = 1f, char character = ';', bool relative = false, float delay = 0f)
     {
-        TypingIstFinished = false;
+        #region Logic
+        TypingIsFinished = false;
 
         //Delay before typewriting
         yield return new WaitForSeconds(delay);
@@ -66,7 +69,8 @@ public static class TypeWriter
             Debug.LogError("Suggested text is null! (TypeWrite method)");
         }
 
-        TypingIstFinished = true;
+        TypingIsFinished = true;
+        #endregion
     }
 }
 

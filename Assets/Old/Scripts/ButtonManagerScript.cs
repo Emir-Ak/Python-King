@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ButtonManager : MonoBehaviour {
+public class ButtonManagerScript : MonoBehaviour {
 
     public GameObject[] mainMenuButtons;
 

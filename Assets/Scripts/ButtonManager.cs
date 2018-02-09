@@ -17,6 +17,7 @@ public class ButtonManager : MonoBehaviour {
     {
         testUIInstance = Instantiate(testUIPrefab);
         testUIInstance.name = testUIPrefab.name;
+
         Destroy(gameObject);
     }
 

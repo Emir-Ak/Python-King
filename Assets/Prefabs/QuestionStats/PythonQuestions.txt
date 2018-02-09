@@ -1,9 +1,4 @@
-Easy:
 Fill in the blanks:;In Python, __________ allows you to execute your program without compiling it.
-answer: interpreter
 Fill in the blanks:;Python also includes ____, the integrated development environment, which includes tools for writing and debugging entire programs.
-answer: IDLE
-Write the code to print "Hi".
-answer: print("Hi")
+Write the code to print "hi".
 What is the output of this code?;>>> (4 + 8) / 2
-answer: 6.0

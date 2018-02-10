@@ -1,4 +1,0 @@
-interpreter
-IDLE
-print("hi")
-6.0

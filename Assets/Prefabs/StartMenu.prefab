@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 114318750488731850}
   - component: {fileID: 114389708535266836}
   - component: {fileID: 114787899306026226}
+  - component: {fileID: 114692013105289972}
   m_Layer: 5
   m_Name: StartMenu
   m_TagString: Untagged
@@ -342,7 +343,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114787899306026226}
+      - m_Target: {fileID: 114692013105289972}
         m_MethodName: Compile
         m_Mode: 1
         m_Arguments:
@@ -351,7 +352,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -548,6 +549,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114692013105289972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933772718125304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6adfb047fab4af342a4eac125a6d569b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testUIPrefab: {fileID: 1038237813461556, guid: 73f778419bd7c4a429fe040c7588ce26,
+    type: 2}
+  audioMixer: {fileID: 24100000, guid: 851fcc84f30bc57498c3465291880fe3, type: 2}
+  resolutionDropdown: {fileID: 0}
 --- !u!114 &114747452634979020
 MonoBehaviour:
   m_ObjectHideFlags: 1

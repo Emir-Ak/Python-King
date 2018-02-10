@@ -6,5 +6,5 @@ public class Question
     public string solution;
     //public int difficulty;
 
-    public float time = 5f;
+    public float time = 200;
 }

@@ -331,18 +331,18 @@ MonoBehaviour:
   - pythonQuestion: Fill in the blanks:;In Python, __________ allows you to execute
       your program without compiling it.
     solution: interpreter
-    time: 1
+    time: 20
   - pythonQuestion: Fill in the blanks:;Python also includes ____, the integrated
       development environment, which includes tools for writing and debugging entire
       programs.
     solution: IDLE
-    time: 1
+    time: 20
   - pythonQuestion: Write the code to print "Hi".
     solution: print("Hi")
-    time: 1
+    time: 20
   - pythonQuestion: What is the output of this code?;>>> (4 + 8) / 2
     solution: 6.0
-    time: 1
+    time: 20
   currentQuestionText: {fileID: 114918540710485998}
   answerField: {fileID: 114787530198105636}
   correctAnswersText: {fileID: 114243500247896612}

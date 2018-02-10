@@ -2,13 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 
 public class TestManager : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    List<Question> questions = new List<Question>();
-
     //Text spacefield for questions
     [SerializeField]
     Text currentQuestionText;
@@ -18,8 +17,8 @@ public class TestManager : MonoBehaviour
     [SerializeField]
     Text correctAnswersText;       //Display for showing number of correct answers
     int correctAnswers = 0;        //Number of correct answers
-    int currentQuestionIndex = 0;  //Index of a question, on which the user stopped 
-                                   //(It will allows us to rerun the coroutine)
+    int currentQuestionIndex = 0;  /*Index of a question, on which the user stopped 
+                                      (It will allows us to rerun the coroutine) */
 
     //All variables needed for timing bar (which is a slider)
     [SerializeField]
@@ -27,25 +26,29 @@ public class TestManager : MonoBehaviour
     float timeBarValue;   //Needed in value calculations
     float timeAvailable;  //Time available to examiner for each question
 
-    int solutionLength;   //Length of the solution
-
-    private IEnumerator startExaminationcoroutine;
+    private IEnumerator startExaminationCoroutine; //Holds the coroutine
 
     [SerializeField]
     GameObject startMenuPrefab;
     private GameObject startMenuInstance;
-
+    #endregion
+    #region Awake
+    private void Awake()
+    {
+        QAContainer.ReadData();
+    }
     #endregion
     #region Start
     private void Start()
     {
         //Coroutine is stored in a variable, with all attributes assigned
-        startExaminationcoroutine = StartExamination(questions, currentQuestionText, answerField);
-        StartCoroutine(startExaminationcoroutine); //Starts the coroutine
+        startExaminationCoroutine = StartExamination();
+        StartCoroutine(startExaminationCoroutine); //Starts the coroutine
         //Turns text into a form of Correct Answers/Numer of questions
-        correctAnswersText.text = correctAnswers.ToString() + "/" + questions.Count.ToString();
+        correctAnswersText.text = correctAnswers.ToString() + "/" + QAContainer.pythonQuestions.Count.ToString();
 
         timeBar.gameObject.SetActive(false); //To refer to some features of UI element, you need too refer to it's "gameObject" property
+
     }
 
     #endregion
@@ -63,62 +66,70 @@ public class TestManager : MonoBehaviour
 
     #endregion
     #region Examination
-    IEnumerator StartExamination(List<Question> listOfQuestions, Text spaceForQuestions, InputField answer)
+    IEnumerator StartExamination()
     {
+
+        //Create private internal variables (Not to hardcode it in)
+        List<string> _pythonQuestions = QAContainer.pythonQuestions;
+        List<string> _pythonSolutions = QAContainer.pythonSolutions;
+        List<float> _pythonTimings = QAContainer.pythonTimings;
+
         //If any questions present...
-        if (listOfQuestions != null)
+        if (_pythonQuestions != null)
         {
+
             //For every question in the list
-            foreach (Question question in listOfQuestions)
+            foreach (string _question in _pythonQuestions)
             {
                 //Skip all the questions that were seen already
-                if (listOfQuestions.IndexOf(question) != currentQuestionIndex)
+                if (_pythonQuestions.IndexOf(_question) != currentQuestionIndex)
                 {
                     continue;
                 }
-                //Limit the answer according to the length of the solution
-                answer.characterLimit = question.solution.Length;
+                //Create more variables for ease of use and readability
+                string _solution = _pythonSolutions[currentQuestionIndex];
+                float _timing = _pythonTimings[currentQuestionIndex];
 
-                StartCoroutine(TypeWriter.TypeWrite(spaceForQuestions, question.pythonQuestion)); //Type in the question
+                //Limit the answer according to the length of the solution
+                answerField.characterLimit = _solution.Length;
+
+                StartCoroutine(TypeWriter.TypeWrite(currentQuestionText, _question)); //Type in the question
 
                 //Internal variable, time for a question
-                bool _didTimeFinish = false;
+                bool _Finished = false;
 
                 yield return new WaitWhile(() => !TypeWriter.TypingIsFinished);   //Wait till the type-in animation is finished
 
-                timeAvailable = question.time;        //Personal time for each question
+                timeAvailable = _timing;              //Personal time for each question
                 timeBarValue = timeAvailable;         //Sets the value of slider to one (full value)               
                 yield return new WaitForEndOfFrame(); //No state of value changing to one is taking places
                 timeBar.gameObject.SetActive(true);   //Slider is visible now
 
                 //Starts coroutine which checks user input answer
-                StartCoroutine(CheckAnswer(answer, question.solution, _didTimeFinish));
+                StartCoroutine(CheckAnswer(_solution, _Finished));
 
                 currentQuestionIndex++; //The question is seen, index increased
 
                 yield return new WaitForSeconds(timeAvailable); //Wait before next question
 
-                answer.text = string.Empty; //clear the previous answer
+                answerField.text = string.Empty; //clear the previous answer
 
-                _didTimeFinish = true; //Time for question is finished
-                                       //(Passed to "CheckAnswer" coroutine;
+                _Finished = true; //Time for question is finished
+                                       //(Passed to "CheckAnswer" coroutine)
 
                 timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
-
-                Debug.Log("Timeout");
             }
 
-            Debug.Log("Resseting");
-            ResetEverything(spaceForQuestions); //Will reset all settings to be able to start test again
+            ResetEverything(); //Will reset all settings to be able to start test again
         }
 
         else
         {
-            Debug.LogError("No questions in a list (StartExamination)");
+            Debug.LogError("No questions in a list (QAContainer --> PythonQuestions)");
         }
     }
 
-    IEnumerator CheckAnswer(InputField inputField, string solution, bool didTimeFinish)
+    IEnumerator CheckAnswer(string solution, bool timeIsFinished)
     {
         if (solution == string.Empty)
         {
@@ -127,22 +138,23 @@ public class TestManager : MonoBehaviour
 
         else
         {
-            //Executes till the time for question is finished
-            while (didTimeFinish == false)
+            //Executes till the time for a question is finished
+            while (timeIsFinished == false)
             {
 
-                if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    //if answer is correct...
-                    if (inputField.text == solution)
+                    //if answer is correct
+                    if (answerField.text == solution)
                     {
                         correctAnswers++;
                     }
 
-                    StopCoroutine(startExaminationcoroutine);  //Stop coroutine on the question it is on
-                    StartCoroutine(startExaminationcoroutine); //Start it again, but currentQuestionIndex fixes it
+                    StopCoroutine(startExaminationCoroutine);  //Stop coroutine on the question it is on
+                    StartCoroutine(startExaminationCoroutine); //Start it again, but currentQuestionIndex fixes it
+
                     //Turns text into a form of Correct Answers/Numer of questions
-                    correctAnswersText.text = correctAnswers.ToString() + "/" + questions.Count.ToString();
+                    correctAnswersText.text = correctAnswers.ToString() + "/" + QAContainer.pythonQuestions.Count.ToString();
 
                     break;
                 }
@@ -154,9 +166,9 @@ public class TestManager : MonoBehaviour
         }
     }
 
-    void ResetEverything(Text text)
+    void ResetEverything()
     {
-        text.text = string.Empty;
+        currentQuestionText.text = string.Empty;
         correctAnswers = 0;
         currentQuestionIndex = 0;
 

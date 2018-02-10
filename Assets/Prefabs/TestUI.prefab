@@ -327,25 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669635cafef3c6a4ab6dd7d6d94e3520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  questions:
-  - pythonQuestion: Fill in the blanks:;In Python, __________ allows you to execute
-      your program without compiling it.
-    solution: interpreter
-    time: 20
-  - pythonQuestion: Fill in the blanks:;Python also includes ____, the integrated
-      development environment, which includes tools for writing and debugging entire
-      programs.
-    solution: IDLE
-    time: 20
-  - pythonQuestion: Write the code to print "Hi".
-    solution: print("Hi")
-    time: 20
-  - pythonQuestion: What is the output of this code?;>>> (4 + 8) / 2
-    solution: 6.0
-    time: 20
-=======
->>>>>>> acd1ea143af9dda504900acd02367682191124c6
   currentQuestionText: {fileID: 114918540710485998}
   answerField: {fileID: 114787530198105636}
   correctAnswersText: {fileID: 114243500247896612}

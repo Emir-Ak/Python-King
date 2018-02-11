@@ -1,38 +1,8 @@
-﻿[System.Serializable]
+﻿//Serializable object, nothing special...
+[System.Serializable]
 public class QAContainer {
-
     public string question;
     public string solution;
     public float time;
-
-    //public static List<string> pythonQuestions = new List<string>();
-    //public static List<string> pythonSolutions = new List<string>();
-    //public static List<float> pythonTimings = new List<float>();
- 
-    ////Assigns data from txt files to describe questions (q,a,t)
-    //public static void ReadData()
-    //{
-    //    pythonQuestions.AddRange(ReadString("Assets/Resources/PythonQuestions.txt").Split('\n'));
-    //    pythonSolutions.AddRange(ReadString("Assets/Resources/PythonSolutions.txt").Split('\n'));
-
-    //    //Don't ask, I dont know why... xD
-    //    for (int i = 0; i < pythonSolutions.Count; i++)
-    //    {
-    //        pythonSolutions[i] = pythonSolutions[i].Substring(0, pythonSolutions[i].Length - 1);
-    //    }
-
-    //    foreach(string line in (ReadString("Assets/Resources/PythonTimings.txt").Split('\n')))
-    //    {
-    //        pythonTimings.Add(float.Parse(line));
-    //    }
-    //}
-
-    ////Returns a read string from txt file
-    //static string ReadString(string path)
-    //{
-    //    //Read the text from directly from the txt file
-    //    StreamReader reader = new StreamReader(path);
-    //    return reader.ReadToEnd();
-    //}
 }
 

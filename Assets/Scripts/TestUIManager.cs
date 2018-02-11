@@ -1,24 +1,29 @@
-﻿using UnityEngine;            
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TestManager : MonoBehaviour
+//Manages the examination of the user
+public class TestUIManager : MonoBehaviour
 {
-    #region Variables
+    //No comments
+    #region VARIABLES
     public List<QAContainer> containers = new List<QAContainer>();
+
+    [SerializeField]
+    GameObject mainMenuPrefab;
 
     //Text spacefield for questions
     [SerializeField]
     Text currentQuestionText;
 
+    //Everything related to answering the questions
     [SerializeField]
     InputField answerField;        //Where user enters the answer
     [SerializeField]
     Text correctAnswersText;       //Display for showing number of correct answers
+    int currentQuestionIndex = 0;  //Index of a question, on which the user stopped (It will allows us to rerun the coroutine)
     int correctAnswers = 0;        //Number of correct answers
-    int currentQuestionIndex = 0;  /*Index of a question, on which the user stopped 
-                                      (It will allows us to rerun the coroutine) */
 
     //All variables needed for timing bar (which is a slider)
     [SerializeField]
@@ -27,13 +32,10 @@ public class TestManager : MonoBehaviour
     float timeAvailable;  //Time available to examiner for each question
 
     private IEnumerator startExaminationCoroutine; //Holds the coroutine
-
-    [SerializeField]
-    GameObject startMenuPrefab;
-    private GameObject startMenuInstance;
     #endregion
 
-    #region Start
+    //Methods related to start function
+    #region START
     private void Start()
     {
         //Coroutine is stored in a variable, with all attributes assigned
@@ -45,9 +47,10 @@ public class TestManager : MonoBehaviour
         timeBar.gameObject.SetActive(false); //To refer to some features of UI element, you need too refer to it's "gameObject" property
 
     }
-
     #endregion
-    #region Update
+
+    //Methods related to update function
+    #region UPDATE
     private void Update()
     {
         //Calculation of slider value change
@@ -58,13 +61,16 @@ public class TestManager : MonoBehaviour
             timeBar.value = timeBarValue / timeAvailable;
         }
     }
-
     #endregion
-    #region Examination
+
+    //Here is everything for managing the examination/testing logic
+    #region EXAMINATION
+
+    #region Main_Coroutine
     IEnumerator StartExamination()
     {
         //If any questions present...
-        if (containers != null)
+        if (containers != null && containers.Count > 0)
         {
 
             //For every question in the list
@@ -76,10 +82,16 @@ public class TestManager : MonoBehaviour
                     continue;
                 }
 
+                if (container.question == string.Empty || container.solution == string.Empty || container.time <= 0f)
+                {
+                    Debug.LogError("Either question or solution is empty or time is less then or equal to 0 (TestUI)");
+                    Debug.Break();
+                }
+
                 //Limit the answer according to the length of the solution
                 answerField.characterLimit = container.solution.Length;
 
-                StartCoroutine(TypeWriter.TypeWrite(currentQuestionText, container.question)); //Type in the question
+                StartCoroutine(TypeWriter.TypeWrite(currentQuestionText, container.question, 2f)); //Type in the question
 
                 //Internal variable, time for a question
                 bool _Finished = false;
@@ -101,7 +113,7 @@ public class TestManager : MonoBehaviour
                 answerField.text = string.Empty; //clear the previous answer
 
                 _Finished = true; //Time for question is finished
-                                       //(Passed to "CheckAnswer" coroutine)
+                                  //(Passed to "CheckAnswer" coroutine)
 
                 timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
             }
@@ -111,15 +123,19 @@ public class TestManager : MonoBehaviour
 
         else
         {
-            Debug.LogError("No containers in a list");
+            Debug.LogError("No containers in the list");
+            Debug.Break();
         }
     }
+    #endregion
 
+    #region Sub_Coroutine
     IEnumerator CheckAnswer(string solution, bool timeIsFinished)
     {
         if (solution == string.Empty)
         {
             Debug.LogError("No solution for this question assigned");
+            Debug.Break();
         }
 
         else
@@ -151,21 +167,26 @@ public class TestManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Other_Methods
     void ResetExaminationSettings()
     {
         currentQuestionText.text = string.Empty;
         correctAnswers = 0;
         currentQuestionIndex = 0;
 
-        if (startMenuPrefab == null)
+        if (mainMenuPrefab == null)
             Debug.LogError("StartMenu is not assigned!");
 
-        startMenuInstance = Instantiate(startMenuPrefab);
-        startMenuInstance.name = startMenuPrefab.name;
-
+        //Transition to main menu
+        GameObject _instance;
+        _instance = Instantiate(mainMenuPrefab);
+        _instance.name = mainMenuPrefab.name;
+        _instance = null;
         Destroy(gameObject);
     }
+    #endregion
 
-    #endregion  
+    #endregion
 }

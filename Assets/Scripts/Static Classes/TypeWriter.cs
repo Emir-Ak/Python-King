@@ -6,7 +6,7 @@ public class TypeWriter
 {
     public static bool TypingIsFinished;
 
-    #region Description
+    #region DESCRIPTION
     //Description of the static method (can be non-static method description)
     /// <summary>
     /// Creates effect on a text that makes it look like it is being typed in!
@@ -20,7 +20,7 @@ public class TypeWriter
     #endregion
     public static IEnumerator TypeWrite(Text text, string result, float time = 1f, char character = ';', bool relative = false, float delay = 0f)
     {
-        #region Logic
+        #region LOGIC
         TypingIsFinished = false;
 
         //Delay before typewriting

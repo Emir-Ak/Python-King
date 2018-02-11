@@ -1,4 +1,4 @@
-﻿//Serializable object, nothing special...
+﻿//Serializable object, Question-Answer container
 [System.Serializable]
 public class QAContainer {
     public string question;

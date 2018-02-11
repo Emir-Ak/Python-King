@@ -6,7 +6,7 @@ using System.Collections.Generic;
 //Manages the examination of the user
 public class TestUIManager : MonoBehaviour
 {
-    //No comments
+    //Declaration of class-wide variables
     #region VARIABLES
     public List<QAContainer> containers = new List<QAContainer>();
 

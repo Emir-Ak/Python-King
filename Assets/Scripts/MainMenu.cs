@@ -3,7 +3,7 @@
 //MainMenu manager, helds all button transitions
 public class MainMenu : MonoBehaviour
 {
-    //No comments
+    //Declaration of class-wide variables
     #region VARIABLES
     [SerializeField]
     GameObject testUIPrefab;
@@ -13,32 +13,28 @@ public class MainMenu : MonoBehaviour
     //logMenuPrefab     -Uncomment when log prefab is ready
     #endregion
 
-    //Public methods needed for click events
+    //Public methods needed for OnClick events
     #region BUTTONS
     public void CompileButton()
     {
         MakeTransition(testUIPrefab);
     }
-
     public void SystemButton()
     {
         MakeTransition(systemMenuPrefab);
     }
-
     public void LogButton()
     {
         //MakeTransition(logMenuPrefab);  -Uncomment when log prefab is ready
     }
-
     public void BreakButton()
     {
         Application.Quit();
     }
     #endregion
 
-    //This is the region for additional methods required
+    //Additional methods required
     #region ADDITIONAL
-    //For now it is needed to keep the hierarchy and tidiness
 
     //Used for transition buttons
     void MakeTransition(GameObject prefab)

@@ -1,0 +1,4 @@
+Fill in the blanks:;In Python, __________ allows you to execute your program without compiling it.
+Fill in the blanks:;Python also includes ____, the integrated development environment, which includes tools for writing and debugging entire programs.
+Write the code to print "hi".
+What is the output of this code?;>>> (4 + 8) / 2

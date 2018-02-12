@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 //MainMenu manager, helds all button transitions
 public class MainMenu : MonoBehaviour
@@ -11,6 +12,9 @@ public class MainMenu : MonoBehaviour
     GameObject systemMenuPrefab;
     //[SerializeField]  -Uncomment when log prefab is ready
     //logMenuPrefab     -Uncomment when log prefab is ready
+
+    [SerializeField]
+    AudioMixer audioMixer;
     #endregion
 
     //Public methods needed for OnClick events
@@ -35,6 +39,18 @@ public class MainMenu : MonoBehaviour
 
     //Additional methods required
     #region ADDITIONAL
+
+    private void Start()
+    {
+        LoadInput();
+    }
+
+    void LoadInput()
+    {
+        audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterValue"));
+        audioMixer.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundValue"));
+        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicValue"));
+    }
 
     //Used for transition buttons
     void MakeTransition(GameObject prefab)

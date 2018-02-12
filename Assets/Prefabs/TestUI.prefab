@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14705884, g: 1, b: 0.15294115, a: 1}
+  m_Color: {r: 0.11656572, g: 0.7205882, b: 0.12073136, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -607,7 +607,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: e53f57a9b1933d543a6cb4e4e2e28cf6, type: 3}
     m_FontSize: 35
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 60
     m_Alignment: 0
@@ -632,13 +632,20 @@ MonoBehaviour:
   - question: Fill in the blanks:;;In Python, __________ allows you;to execute your
       program;without compiling it.
     solution: interpreter
-    time: 10
+    time: 15
   - question: What is the output of this code?;;>>> (4 + 8) / 2
     solution: 6.0
     time: 10
   - question: Write the code to print "hi".
     solution: print("hi")
     time: 10
+  - question: 'What will the following code print?;;n = None;i = n;n1 = None;emir
+      = "Main Developer";;try:; if i != n or i is None and i+5 == 5:;  print (float(int("6666")));except:;
+      try:;  print (float(n + None)); except:;  del n;  try:;   assert i is None and
+      emir == "Main developer" and n1 == None;   print(float(int("2007")));  except:;   if
+      not n1 is not None:;    n1 = 0.565;    print(float(int(n1) + 3000))    '
+    solution: 3000.0
+    time: 60
   mainMenuPrefab: {fileID: 1136967967314380, guid: 901946467c6ae324896f54efea10cceb,
     type: 2}
   currentQuestionText: {fileID: 114918540710485998}
@@ -746,8 +753,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -172.09613, y: 53.998657}
-  m_SizeDelta: {x: 1181, y: 518.4}
+  m_AnchoredPosition: {x: -172.8, y: 20.9}
+  m_SizeDelta: {x: 1606, y: 772.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224135213465207998
 RectTransform:
@@ -767,7 +774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -172.09613, y: -95.68225}
+  m_AnchoredPosition: {x: -172.09613, y: -128}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224248245807668018
@@ -861,8 +868,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -172.97992, y: 54.29973}
-  m_SizeDelta: {x: 799, y: 338.4}
+  m_AnchoredPosition: {x: -172.97992, y: 21.2}
+  m_SizeDelta: {x: 1079.1, y: 475.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224668838740936720
 RectTransform:

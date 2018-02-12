@@ -13,12 +13,14 @@ public class SectionButtonCustomization : MonoBehaviour
         image = GetComponent<Image>();
         sectionIndex = 0;
         PlayerPrefs.SetInt("sectionIndex", sectionIndex);
-
+        SetColor();
     }
+
     private void Update()
     {
         SetColor();
     }
+
     void SetColor()
     {
         sectionIndex = PlayerPrefs.GetInt("sectionIndex");

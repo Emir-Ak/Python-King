@@ -1931,14 +1931,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.16911763, g: 1, b: 0.38113576, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b373c57283467844b97cf079200f7337, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7475647b5ce703a4cac5f355ffc3f9b3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2397,6 +2397,9 @@ MonoBehaviour:
   mainMenuPrefab: {fileID: 1136967967314380, guid: 901946467c6ae324896f54efea10cceb,
     type: 2}
   fullScreenToggle: {fileID: 114359254465425652}
+  masterSlider: {fileID: 114696918795405426}
+  sfxSlider: {fileID: 114019819727643574}
+  musicSlider: {fileID: 114631309578142416}
 --- !u!114 &114938939366348190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3384,10 +3387,10 @@ RectTransform:
   m_Father: {fileID: 224902524281856926}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.5, y: 0.19821215}
-  m_SizeDelta: {x: 20, y: 19.42}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224817187136140558
 RectTransform:

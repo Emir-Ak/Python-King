@@ -18,6 +18,17 @@ public class SystemMenu : MonoBehaviour
     Toggle fullScreenToggle;
 
     Resolution[] resolutions;
+
+    [SerializeField]
+    Slider masterSlider;
+    [SerializeField]
+    Slider sfxSlider;
+    [SerializeField]
+    Slider musicSlider;
+
+    private float masterValue; 
+    private float sfxValue;  
+    private float musicValue;
     #endregion
 
     //Public methods for OnValueChanged events (Audio settings)
@@ -61,6 +72,8 @@ public class SystemMenu : MonoBehaviour
     #region ADDITIONAL
     void Start()
     {
+        LoadInput();
+
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
@@ -99,7 +112,31 @@ public class SystemMenu : MonoBehaviour
         _instance.name = prefab.name;    //Rename it to original name
         _instance = null;                //Free the variable
 
+        SaveInput();
         Destroy(gameObject);
+    }
+
+    void SaveInput()
+    {
+        masterValue = masterSlider.value;
+        sfxValue = sfxSlider.value;
+        musicValue = musicSlider.value;
+
+        PlayerPrefs.SetFloat("MasterValue",masterValue);
+        PlayerPrefs.SetFloat("SoundValue", sfxValue);
+        PlayerPrefs.SetFloat("MusicValue", musicValue);
+    }
+    void LoadInput()
+    {
+
+        masterValue = PlayerPrefs.GetFloat("MasterValue", masterValue);
+        sfxValue = PlayerPrefs.GetFloat("SoundValue", sfxValue);
+        musicValue = PlayerPrefs.GetFloat("MusicValue", musicValue);
+
+
+        masterSlider.value = masterValue;
+        sfxSlider.value = sfxValue;
+        musicSlider.value = musicValue;
     }
     #endregion
 }

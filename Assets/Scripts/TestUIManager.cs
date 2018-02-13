@@ -32,12 +32,23 @@ public class TestUIManager : MonoBehaviour
     float timeAvailable;  //Time available to examiner for each question
 
     private IEnumerator startExaminationCoroutine; //Holds the coroutine
+
+    bool checkingAnswer = false;
+
+    [SerializeField]
+    Text helperText; //"ENTER..." text
+    [SerializeField]
+    Animator helperTextAnimator;
     #endregion
 
     //Methods related to start function
     #region START
     private void Start()
     {
+        answerField.ActivateInputField();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         //Coroutine is stored in a variable, with all attributes assigned
         startExaminationCoroutine = StartExamination();
         StartCoroutine(startExaminationCoroutine); //Starts the coroutine
@@ -59,6 +70,27 @@ public class TestUIManager : MonoBehaviour
             //Value decreased relative to time and changed into "0 to 1" form
             timeBarValue -= Time.deltaTime;
             timeBar.value = timeBarValue / timeAvailable;
+        }
+
+        if (answerField.isFocused == false)
+        {
+            answerField.ActivateInputField();
+        }
+
+        if (checkingAnswer == false)
+        {
+            answerField.text = string.Empty;
+        }
+
+        if (answerField.text != string.Empty)
+        {
+            helperTextAnimator.Play("HelperText");
+            helperText.text = "ENTER...";
+        }
+
+        else
+        {
+            helperText.text = string.Empty;
         }
     }
     #endregion
@@ -88,25 +120,30 @@ public class TestUIManager : MonoBehaviour
                     Debug.Break();
                 }
 
-                //Limit the answer according to the length of the solution
-                answerField.characterLimit = container.solution.Length;
 
-                StartCoroutine(TypeWriter.TypeWrite(currentQuestionText, container.question, 2f)); //Type in the question
+                checkingAnswer = false;
+
+                StartCoroutine(AZAnim.TypeWrite(currentQuestionText, container.question, 2f)); //Type in the question
 
                 //Internal variable, time for a question
                 bool _Finished = false;
 
-                yield return new WaitWhile(() => !TypeWriter.TypingIsFinished);   //Wait till the type-in animation is finished
+                yield return new WaitWhile(() => !AZAnim.TypeWritingIsFinished);   //Wait till the type-in animation is finished
 
                 timeAvailable = container.time;              //Personal time for each question
                 timeBarValue = timeAvailable;         //Sets the value of slider to one (full value)               
                 yield return new WaitForEndOfFrame(); //No state of value changing to one is taking places
                 timeBar.gameObject.SetActive(true);   //Slider is visible now
 
+                currentQuestionIndex++; //The question is seen, index increased
+
+                //Limit the answer according to the length of the solution
+                answerField.characterLimit = container.solution.Length;
+
+                checkingAnswer = true;
+
                 //Starts coroutine which checks user input answer
                 StartCoroutine(CheckAnswer(container.solution, _Finished));
-
-                currentQuestionIndex++; //The question is seen, index increased
 
                 yield return new WaitForSeconds(timeAvailable); //Wait before next question
 
@@ -161,9 +198,8 @@ public class TestUIManager : MonoBehaviour
                     break;
                 }
 
-                //Will make the loop act as FixedUpdate()
-                //Better timing will be achieved in future to increase performance
-                yield return new WaitForFixedUpdate();
+                //Will make the loop act as Update();
+                yield return null;
             }
         }
     }

@@ -26,9 +26,11 @@ public class SystemMenu : MonoBehaviour
     [SerializeField]
     Slider musicSlider;
 
-    private float masterValue; 
-    private float sfxValue;  
+    private float masterValue;
+    private float sfxValue;
     private float musicValue;
+
+    private bool checkThatSHit;
     #endregion
 
     //Public methods for OnValueChanged events (Audio settings)
@@ -58,6 +60,7 @@ public class SystemMenu : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex]; //Assign the chosen resolution to the variable
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen); //Apply the resolution
     }
+
     #endregion
 
     //Public methods for OnCick events
@@ -73,7 +76,11 @@ public class SystemMenu : MonoBehaviour
     void Start()
     {
         LoadInput();
+        SetClarifiedResolution();
+    }
 
+    void SetClarifiedResolution()
+    {
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
@@ -91,7 +98,7 @@ public class SystemMenu : MonoBehaviour
 
             //Set appropriate resolution for the screen
             if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+                 resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
             }
@@ -100,8 +107,6 @@ public class SystemMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);             //Add options to the dropdown menu
         resolutionDropdown.value = currentResolutionIndex;  //Set the value to the current one you have
         resolutionDropdown.RefreshShownValue();             //Refresh the displayed value
-
-        fullScreenToggle.isOn = Screen.fullScreen;
     }
 
     void MakeTransition(GameObject prefab)
@@ -116,22 +121,26 @@ public class SystemMenu : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //Save users system configuration change 
     void SaveInput()
     {
         masterValue = masterSlider.value;
         sfxValue = sfxSlider.value;
         musicValue = musicSlider.value;
 
-        PlayerPrefs.SetFloat("MasterValue",masterValue);
+        PlayerPrefs.SetFloat("MasterValue", masterValue);
         PlayerPrefs.SetFloat("SoundValue", sfxValue);
         PlayerPrefs.SetFloat("MusicValue", musicValue);
     }
+
+    //Load the change
     void LoadInput()
     {
 
         masterValue = PlayerPrefs.GetFloat("MasterValue", masterValue);
         sfxValue = PlayerPrefs.GetFloat("SoundValue", sfxValue);
         musicValue = PlayerPrefs.GetFloat("MusicValue", musicValue);
+        fullScreenToggle.isOn = Screen.fullScreen;
 
 
         masterSlider.value = masterValue;

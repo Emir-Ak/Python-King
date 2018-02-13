@@ -45,9 +45,10 @@ public class TestUIManager : MonoBehaviour
     #region START
     private void Start()
     {
-        answerField.ActivateInputField();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        helperTextAnimator.speed = 0f;
+        answerField.ActivateInputField();         //Focus on input field
+        Cursor.visible = false;                   //Cursor is not visible
+        Cursor.lockState = CursorLockMode.Locked; //Lock the cursor in the middle
 
         //Coroutine is stored in a variable, with all attributes assigned
         startExaminationCoroutine = StartExamination();
@@ -56,6 +57,9 @@ public class TestUIManager : MonoBehaviour
         correctAnswersText.text = correctAnswers.ToString() + "/" + containers.Count.ToString();
 
         timeBar.gameObject.SetActive(false); //To refer to some features of UI element, you need too refer to it's "gameObject" property
+
+        //Clears the helper text
+        helperText.text = string.Empty;
 
     }
     #endregion
@@ -72,25 +76,18 @@ public class TestUIManager : MonoBehaviour
             timeBar.value = timeBarValue / timeAvailable;
         }
 
+        //If the user is not focused on input field
         if (answerField.isFocused == false)
         {
+            //Activate it and force him to focus onto it
             answerField.ActivateInputField();
         }
 
+        //if answer is not being checked
         if (checkingAnswer == false)
         {
+            //Delete everything user types in
             answerField.text = string.Empty;
-        }
-
-        if (answerField.text != string.Empty)
-        {
-            helperTextAnimator.Play("HelperText");
-            helperText.text = "ENTER...";
-        }
-
-        else
-        {
-            helperText.text = string.Empty;
         }
     }
     #endregion
@@ -155,7 +152,7 @@ public class TestUIManager : MonoBehaviour
                 timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
             }
 
-            ResetExaminationSettings(); //Will reset all settings to be able to start test again
+            ResetAndExit(); //Will reset all settings to be able to start test again
         }
 
         else
@@ -177,9 +174,33 @@ public class TestUIManager : MonoBehaviour
 
         else
         {
+            bool _isAnswerFull = false;
             //Executes till the time for a question is finished
             while (timeIsFinished == false)
             {
+                helperTextAnimator.speed = 0f;
+                //If answer is as long as solution is
+                if (answerField.text.Length == solution.Length)
+                {
+                    helperTextAnimator.speed = 1f;
+                    if (_isAnswerFull == false)
+                    {
+                        _isAnswerFull = true;
+                        //Start animation, make the helper text visible
+                        StartCoroutine(HelperTextAnimation());                      
+                    }
+
+                    if(helperText.text != "ENTER...")
+                    {
+                        helperText.text = "ENTER...";
+                    }
+                }
+                else
+                {
+                    //Delete the helper text
+                    helperText.text = string.Empty;
+                    _isAnswerFull = false;
+                }
 
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
@@ -204,9 +225,14 @@ public class TestUIManager : MonoBehaviour
         }
     }
     #endregion
-
+    IEnumerator HelperTextAnimation()
+    {
+        helperTextAnimator.Play("HelperTextFadeIn");
+        yield return new WaitForSeconds(0.5f);
+        helperTextAnimator.Play("HelperTextIdle");
+    }
     #region Other_Methods
-    void ResetExaminationSettings()
+    void ResetAndExit()
     {
         currentQuestionText.text = string.Empty;
         correctAnswers = 0;

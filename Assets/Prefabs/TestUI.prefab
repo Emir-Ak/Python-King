@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.13103461, a: 0.421}
+  m_Color: {r: 0, g: 1, b: 0.12941177, a: 0.45490196}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.13103461, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.13103461, a: 0.959}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -475,7 +475,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: e53f57a9b1933d543a6cb4e4e2e28cf6, type: 3}
     m_FontSize: 50
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 60
@@ -804,14 +804,14 @@ RectTransform:
   m_GameObject: {fileID: 1319438220333106}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.268615, y: 0.268615, z: 0.268615}
+  m_LocalScale: {x: 0.2572363, y: 0.2572363, z: 0.2572363}
   m_Children: []
   m_Father: {fileID: 224135213465207998}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1.5, y: -16.7}
+  m_AnchoredPosition: {x: 1.4, y: -15.7}
   m_SizeDelta: {x: 258.45, y: 63.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224116611178513458
@@ -889,7 +889,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 7.0250006}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224377343595576452
@@ -981,7 +981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 12.4, y: 1.3}
+  m_AnchoredPosition: {x: 10.5, y: -1.3}
   m_SizeDelta: {x: 155.95, y: 63.641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224821466063547140

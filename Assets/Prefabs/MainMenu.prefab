@@ -444,9 +444,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testUIPrefab: {fileID: 1038237813461556, guid: 73f778419bd7c4a429fe040c7588ce26,
     type: 2}
-  systemMenuPrefab: {fileID: 1728414775846782, guid: 0edf7284907f72f4184f45363ccb99df,
+  systemMenuPrefab: {fileID: 1728414775846782, guid: 9a01e844788cbf3429752e0cf5a7c825,
     type: 2}
   audioMixer: {fileID: 24100000, guid: 851fcc84f30bc57498c3465291880fe3, type: 2}
+  buttons:
+  - {fileID: 114899311379443996}
+  - {fileID: 114948961896566614}
+  - {fileID: 114988403663449962}
+  - {fileID: 114848194577284548}
 --- !u!114 &114693449943034506
 MonoBehaviour:
   m_ObjectHideFlags: 1

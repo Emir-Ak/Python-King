@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
-
+using UnityEngine.UI;
+using System.Collections.Generic;
 //MainMenu manager, helds all button transitions
 public class MainMenu : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField]
     AudioMixer audioMixer;
+    [SerializeField]
+    Button[] buttons;
+    List<Text> buttonTexts = new List<Text>();
+
     #endregion
 
     //Public methods needed for OnClick events
@@ -39,12 +44,30 @@ public class MainMenu : MonoBehaviour
 
     //Additional methods required
     #region ADDITIONAL
+    private void Update()
+    {
+        if (AZAnim.MenuAnimatingIsFinished == true && buttons[0].interactable == false)
+        {
+            foreach (Button button in buttons)
+            {
+                button.interactable = true;
+            }
+        }
+    }
 
     private void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         LoadInput();
+
+        foreach (Button button in buttons)
+        {
+            buttonTexts.Add(button.GetComponentInChildren<Text>());
+            button.interactable = false;
+        }
+        
+        StartCoroutine(AZAnim.AnimateMenu(this, buttonTexts, null, 0.5f));
     }
 
     void LoadInput()

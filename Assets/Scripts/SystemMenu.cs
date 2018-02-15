@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections.Generic;
+using System.Collections;
 
 //SystemConfigurationMenu manager, helds transitions and all settings
 public class SystemMenu : MonoBehaviour
@@ -17,6 +18,9 @@ public class SystemMenu : MonoBehaviour
     [SerializeField]
     Toggle fullScreenToggle;
 
+    [SerializeField]
+    Button[] Buttons;
+
     Resolution[] resolutions;
 
     [SerializeField]
@@ -26,11 +30,26 @@ public class SystemMenu : MonoBehaviour
     [SerializeField]
     Slider musicSlider;
 
+    [SerializeField]
+    List<MonoBehaviour> objectsInSystem = new List<MonoBehaviour>();
+    [SerializeField]
+    List<MonoBehaviour> objectsInAccount = new List<MonoBehaviour>();
+
+
+    [SerializeField]
+    GameObject systemSettings;
+    [SerializeField]
+    GameObject accountSettings;
+
     private float masterValue;
     private float sfxValue;
     private float musicValue;
 
-    private bool checkThatSHit;
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip thisClip;
+    [SerializeField]
+    AudioClip otherClip;
     #endregion
 
     //Public methods for OnValueChanged events (Audio settings)
@@ -67,7 +86,23 @@ public class SystemMenu : MonoBehaviour
     #region BUTTONS
     public void ReturnButton()
     {
-        MakeTransition(mainMenuPrefab); //Transition to MainMenu
+        //Transition to main menu    
+        GameObject _instance;                         //Create internal variable of type GameObject
+        _instance = Instantiate(mainMenuPrefab); //Instantiate prefab, assign it to the variable
+        //This is used to get rid of the "(Clone)" part in the name, to keep hierarchy tidy
+        _instance.name = mainMenuPrefab.name;    //Rename it to original name
+        SaveInput();
+        Destroy(gameObject);
+    }
+
+    public void SystemButton()
+    {
+        MakeSectionTransition(true);
+    }
+
+    public void AccountButton()
+    {
+        MakeSectionTransition(false);
     }
     #endregion
 
@@ -75,8 +110,46 @@ public class SystemMenu : MonoBehaviour
     #region ADDITIONAL
     void Start()
     {
+        audioSource = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
         LoadInput();
+        MakeSectionTransition(true);
+    }
+
+    //Manages transition between sections of SystemMenu 
+    void MakeSectionTransition(bool toSettings)
+    {
+        systemSettings.SetActive(toSettings ? true : false);
+        accountSettings.SetActive(toSettings ? false : true);
+        ManageButtons(false);
+        StartCoroutine(AnimateObjects());
+    }
+
+    //Save users system configuration change 
+    void SaveInput()
+    {
+        masterValue = masterSlider.value;
+        sfxValue = sfxSlider.value;
+        musicValue = musicSlider.value;
+
+        PlayerPrefs.SetFloat("MasterValue", masterValue);
+        PlayerPrefs.SetFloat("SoundValue", sfxValue);
+        PlayerPrefs.SetFloat("MusicValue", musicValue);
+    }
+
+    //Load the change
+    void LoadInput()
+    {
+        masterValue = PlayerPrefs.GetFloat("MasterValue", masterValue);
+        sfxValue = PlayerPrefs.GetFloat("SoundValue", sfxValue);
+        musicValue = PlayerPrefs.GetFloat("MusicValue", musicValue);
+
+        fullScreenToggle.isOn = Screen.fullScreen;
+
         SetClarifiedResolution();
+
+        masterSlider.value = masterValue;
+        sfxSlider.value = sfxValue;
+        musicSlider.value = musicValue;
     }
 
     void SetClarifiedResolution()
@@ -96,9 +169,7 @@ public class SystemMenu : MonoBehaviour
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            //Set appropriate resolution for the screen
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                 resolutions[i].height == Screen.currentResolution.height)
+            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
                 currentResolutionIndex = i;
             }
@@ -107,48 +178,74 @@ public class SystemMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);             //Add options to the dropdown menu
         resolutionDropdown.value = currentResolutionIndex;  //Set the value to the current one you have
         resolutionDropdown.RefreshShownValue();             //Refresh the displayed value
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
-    void MakeTransition(GameObject prefab)
+    /// <summary>
+    /// ALLERT: DON'T FORGET TO USE StartCoroutine()! ;-)
+    /// </summary>
+    IEnumerator AnimateObjects()
     {
-        //This is used to get rid of the "(Clone)" part in the name, to keep hierarchy tidy
-        GameObject _instance;            //Create internal variable of type GameObject
-        _instance = Instantiate(prefab); //Instantiate prefab, assign it to the variable
-        _instance.name = prefab.name;    //Rename it to original name
-        _instance = null;                //Free the variable
+        List<Text> texts = new List<Text>();
+        List<GameObject> objects = new List<GameObject>();
 
-        SaveInput();
-        Destroy(gameObject);
+        //Calculates which objects should be Text and which GameObject
+        foreach (MonoBehaviour obj in (accountSettings.activeSelf == false ? objectsInSystem : objectsInAccount))
+        {
+            //Assigns to the relative lists
+            if (obj.GetComponent<Text>() != null)
+            {
+                texts.Add(obj.GetComponent<Text>());
+            }
+            else
+            {
+                objects.Add(obj.gameObject);
+            }
+        }
+
+        //Start animation
+        if (accountSettings.activeSelf == true)
+        {
+            string text = texts[0].text;
+            texts[0].text = string.Empty;
+
+            StartCoroutine(AZAnim.AnimateMenu(this, null, objects, 1f));
+            yield return new WaitUntil(() => AZAnim.MenuAnimatingIsFinished);
+            audioSource.clip = otherClip;
+            audioSource.Play();
+            StartCoroutine(AZAnim.TypeWrite(texts[0], text, 60f)); //HAHHASASHASHAHA*)AHAUA@HA%S&HA^%^Q^&T<EW depld.sqwdlwqHdhsu....W#T@&F.... ...Cooooded is ccraushingu*)@HE^@L#(#))_P/...fds....
+            yield return new WaitUntil(()=> AZAnim.TypeWritingIsFinished);
+            audioSource.Stop();
+            texts[1].gameObject.SetActive(true); 
+
+        }
+        else
+        {
+            if (audioSource.clip != thisClip)
+            {
+                audioSource.clip = thisClip;
+                audioSource.Play();
+            }
+            StartCoroutine(AZAnim.AnimateMenu(this, texts, objects, 2f));
+            yield return new WaitUntil(() => AZAnim.MenuAnimatingIsFinished);
+        }
+
+        
+        //Enable buttons
+        ManageButtons(true);
     }
 
-    //Save users system configuration change 
-    void SaveInput()
+    //Disables or enables the buttons
+    void ManageButtons(bool shouldBeInteractable)
     {
-        masterValue = masterSlider.value;
-        sfxValue = sfxSlider.value;
-        musicValue = musicSlider.value;
-
-        PlayerPrefs.SetFloat("MasterValue", masterValue);
-        PlayerPrefs.SetFloat("SoundValue", sfxValue);
-        PlayerPrefs.SetFloat("MusicValue", musicValue);
-    }
-
-    //Load the change
-    void LoadInput()
-    {
-
-        masterValue = PlayerPrefs.GetFloat("MasterValue", masterValue);
-        sfxValue = PlayerPrefs.GetFloat("SoundValue", sfxValue);
-        musicValue = PlayerPrefs.GetFloat("MusicValue", musicValue);
-        fullScreenToggle.isOn = Screen.fullScreen;
-
-
-        masterSlider.value = masterValue;
-        sfxSlider.value = sfxValue;
-        musicSlider.value = musicValue;
+        foreach (Button button in Buttons)
+        {
+            if (shouldBeInteractable) button.interactable = true;
+            else button.interactable = false;
+        }       
     }
     #endregion
 }
-
 
 

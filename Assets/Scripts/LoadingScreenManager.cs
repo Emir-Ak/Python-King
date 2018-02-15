@@ -14,7 +14,7 @@ public class LoadingScreenManager : MonoBehaviour
 
     private void Start()
     {
-        AZAnim.AnimateScale(fillImg.gameObject, 2f);
+        Screen.fullScreen = true;
         StartCoroutine(AsyncSceneLoad());
     }
 
@@ -29,11 +29,11 @@ public class LoadingScreenManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        StartCoroutine(AZAnim.AnimateScale(fillImg.gameObject, Time.fixedDeltaTime, 1, 0.35f));
+        StartCoroutine(AZAnim.AnimateScale(fillImg.gameObject, fillImg.gameObject.transform.localScale * 17.5f, 1f));
         yield return new WaitForSeconds(1f);
         //Get next scene's ID
         int _sceneID = SceneManager.GetActiveScene().buildIndex + 1;
         //Asynchronised scene loading operation is assigned to a variable
-        AsyncOperation operation = SceneManager.LoadSceneAsync(_sceneID);
+        SceneManager.LoadSceneAsync(_sceneID);
     }
 }

@@ -154,10 +154,10 @@ public class TestUIManager : MonoBehaviour
 
             float chance = Random.value;
 
-            Debug.Log("Chance: " + chance + ", AILevel: " + AILevel.GetValue() + ", Calculation: " + (AILevel.GetValue() / 10.0f - 0.01f * AILevel.GetValue()));
+            Debug.Log("Chance: " + chance + ", AILevel: " + AILevel.GetValue() + ", Calculation: " + (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.05f : 0)));
 
             //Helds all AI percentage calculations and displays it
-            if (chance > (1 - (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.05f : 0) * AILevel.GetValue())))
+            if (chance > (1 - (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.01f : 0) * AILevel.GetValue())))
             {
                 AICorrectAnswers = AICorrectAnswers + new SecureInt(1);
                 AICorrectAnswersText.text = "AI: " + AICorrectAnswers.ToString() + "/" + numberOfQuestions;
@@ -246,7 +246,7 @@ public class TestUIManager : MonoBehaviour
         else if (correctAnswers.GetValue() == AICorrectAnswers.GetValue())
         {
             resultText.color = new Color32(255, 248, 9,255);
-            StartCoroutine(AZAnim.TypeWrite(resultText, "It's a " + correctAnswers.ToString() + " to " + numberOfQuestions.ToString() + " DRAW" + (AILevel.GetValue() == 10 && numberOfQuestions >= 9 ? "!;(You were pretty good at this though xD)" : "..."), 2));
+            StartCoroutine(AZAnim.TypeWrite(resultText, "It's a " + correctAnswers.ToString() + " to " + AILevel.ToString() + " DRAW" + (AILevel.GetValue() == 10 && numberOfQuestions >= 9 ? "!;(You were pretty good at this though xD)" : "..."), 2));
         }
         else
         {

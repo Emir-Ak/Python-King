@@ -464,6 +464,8 @@ MonoBehaviour:
     type: 2}
   systemMenuPrefab: {fileID: 1728414775846782, guid: 9a01e844788cbf3429752e0cf5a7c825,
     type: 2}
+  logMenuPrefab: {fileID: 1194407452282438, guid: df43e6b9d010e914bb483e384b09c88b,
+    type: 2}
   audioMixer: {fileID: 24100000, guid: 851fcc84f30bc57498c3465291880fe3, type: 2}
   buttons:
   - {fileID: 114899311379443996}

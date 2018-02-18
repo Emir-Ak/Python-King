@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour
             buttonTexts.Add(button.GetComponentInChildren<Text>());
             button.interactable = false;
         }
-        
+
         StartCoroutine(AZAnim.AnimateMenu(this, buttonTexts, null, 0.5f));
     }
 
@@ -84,8 +84,6 @@ public class MainMenu : MonoBehaviour
         GameObject _instance;
         _instance = Instantiate(prefab);
         _instance.name = prefab.name;
-        _instance = null;
-
         Destroy(gameObject);
     }
     #endregion

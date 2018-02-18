@@ -24,18 +24,18 @@ public class AZAnim
         #region LOGIC
         TypeWritingIsFinished = false;
 
-        //Delay before typewriting
-        yield return new WaitForSeconds(delay);
-
-        //Learn the time to spend for each letter
-        float _timePerCharacter = time / result.Length;
-
         //If text to typewrite is not relative to original... (If it is, characters would be added onto existing text)
         if (relative == false)
         {
             //Clean the original text
             text.text = "";
         }
+
+        //Delay before typewriting
+        yield return new WaitForSeconds(delay);
+
+        //Learn the time to spend for each letter
+        float _timePerCharacter = time / result.Length;
 
         //For every character in the text required...
         foreach (char i in result)

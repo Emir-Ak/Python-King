@@ -65,6 +65,28 @@ public struct SecureInt
     {
         return new SecureInt(d1.GetValue() / d2.GetValue());
     }
+    public static bool operator >(SecureInt d1, SecureInt d2)
+    {
+        if (d1.GetValue() > d2.GetValue())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static bool operator <(SecureInt d1, SecureInt d2)
+    {
+        if (d1.GetValue() < d2.GetValue())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 public struct SecureFloat

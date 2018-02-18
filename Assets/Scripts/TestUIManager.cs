@@ -13,6 +13,14 @@ public class TestUIManager : MonoBehaviour
 
     [SerializeField]
     GameObject mainMenuPrefab;
+    [SerializeField]
+    GameObject modeChoice;
+    [SerializeField]
+    GameObject PVEModeSettings;
+    //[SerializeField]
+    //GameObject PVPModeSttings;
+    [SerializeField]
+    GameObject examination;
 
     //Text spacefield for questions
     [SerializeField]
@@ -24,8 +32,12 @@ public class TestUIManager : MonoBehaviour
     [SerializeField]
     Text correctAnswersText;       //Display for showing number of correct answers
     int currentQuestionIndex = 0;  //Index of a question, on which the user stopped (It will allows us to rerun the coroutine)
-    SecureInt correctAnswers;        //Number of correct answers
-    
+    SecureInt correctAnswers;      //Number of correct answers
+
+    [SerializeField]
+    Text AICorrectAnswersText;     //Display for showing number of AI correct answers
+    SecureInt AICorrectAnswers;    //Number of AI correct answers
+
     //All variables needed for timing bar (which is a slider)
     [SerializeField]
     Slider timeBar;       //To refer to slider's value
@@ -40,52 +52,27 @@ public class TestUIManager : MonoBehaviour
     Text helperText; //"ENTER..." text
     [SerializeField]
     Animator helperTextAnimator;
+
+    //Names give themselfs out... 
+    [SerializeField]
+    Scrollbar numberOfQuestionsScrollbar;
+    [SerializeField]
+    Scrollbar AILevelScrollbar;
+    Text numberOfQuestionsNumberText;
+    Text AILevelNumberText;
+
+    [SerializeField]
+    Text resultText;
+
+    private SecureFloat AILevel;
+    private int numberOfQuestions;
     #endregion
 
-    //Methods related to start function
-    #region START
     private void Start()
     {
-        SetRndIntsList();
-
-        correctAnswers = new SecureInt(0);
-
-        helperTextAnimator.speed = 0f;
-        answerField.ActivateInputField();         //Focus on input field
-        Cursor.visible = false;                   //Cursor is not visible
-        Cursor.lockState = CursorLockMode.Locked; //Lock the cursor in the middle
-
-        //Coroutine is stored in a variable, with all attributes assigned
-        startExaminationCoroutine = StartExamination();
-        StartCoroutine(startExaminationCoroutine); //Starts the coroutine
-        //Turns text into a form of Correct Answers/Numer of questions
-        correctAnswersText.text = correctAnswers.ToString() + "/" + containers.Count.ToString();
-
-        timeBar.gameObject.SetActive(false); //To refer to some features of UI element, you need too refer to it's "gameObject" property
-
-        //Clears the helper text
-        helperText.text = string.Empty;
-
+        PVEModeSettings.SetActive(false);
     }
 
-    void SetRndIntsList()
-    {
-        int _subNumber = Random.Range(0, containers.Count);
-
-        //Set a List of random numbers, with Lenght equal to number of quesions
-        for (int i = 0; i < containers.Count; i++)
-        {
-            while (rndInts.Contains(_subNumber))
-            {
-                _subNumber = Random.Range(0, containers.Count);
-            }
-            rndInts.Add(_subNumber);
-        }
-    }
-    #endregion
-
-    //Methods related to update function
-    #region UPDATE
     private void Update()
     {
         //Calculation of slider value change
@@ -110,140 +97,132 @@ public class TestUIManager : MonoBehaviour
             answerField.text = string.Empty;
         }
     }
-    #endregion
 
-    //Here is everything for managing the examination/testing logic
-    #region EXAMINATION
-
-    #region Main_Coroutine
+    //Here are all private the methods
+    #region METHODS
     IEnumerator StartExamination()
     {
 
-        //If any questions present...
-        if (containers != null && containers.Count > 0)
+        //For every question in the list
+        foreach (int i in rndInts)
         {
-            //For every question in the list
-            foreach (int i in rndInts)
+            checkingAnswer = false;
+
+            //Skip all the questions that were seen already
+            if (rndInts.IndexOf(i) != currentQuestionIndex)
             {
-
-                //Skip all the questions that were seen already
-                if (rndInts.IndexOf(i) != currentQuestionIndex)
-                {
-                    continue;
-                }
-
-                if (containers[i].question == string.Empty || containers[i].solution == string.Empty || containers[i].time <= 0f)
-                {
-                    Debug.LogError("Either question or solution is empty or time is less then or equal to 0 (TestUI)");
-                }
-
-                helperText.text = string.Empty;
-
-                checkingAnswer = false;
-
-                StartCoroutine(AZAnim.TypeWrite(currentQuestionText, containers[i].question, 2f)); //Type in the question
-
-                //Internal variable, time for a question
-                bool _Finished = false;
-
-                yield return new WaitWhile(() => !AZAnim.TypeWritingIsFinished);   //Wait till the type-in animation is finished
-
-                timeAvailable = containers[i].time;   //Personal time for each question
-                timeBarValue = timeAvailable;         //Sets the value of slider to one (full value)               
-                yield return new WaitForEndOfFrame(); //No state of value changing to one is taking places
-                timeBar.gameObject.SetActive(true);   //Slider is visible now
-
-                currentQuestionIndex++; //The question is seen, index increased
-
-                //Limit the answer according to the length of the solution
-                answerField.characterLimit = containers[i].solution.Length;
-
-                checkingAnswer = true;
-
-                yield return new WaitForSeconds(0.1f);
-
-                //Starts coroutine which checks user input answer
-                StartCoroutine(CheckAnswer(containers[i].solution, _Finished));
-
-                yield return new WaitForSeconds(timeAvailable); //Wait before next question
-
-                answerField.text = string.Empty; //clear the previous answer
-
-                //Time for question is finished (Passed to "CheckAnswer" coroutine)
-                _Finished = true; 
-
-                timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
+                continue;
+            }
+            else if (rndInts.IndexOf(i) > currentQuestionIndex)
+            {
+                currentQuestionText.text = "Something went wrong!!!\nPLEASE TELL EMIR ABOUT THIS!\n(x1:rndInts.IndexOf(i) != currentQuestionIndex)";
             }
 
-            ResetAndExit(); //Will reset all settings to be able to start test again
+            if (rndInts.IndexOf(i) > numberOfQuestions - 1)
+            {
+                StartCoroutine(DisplayResult());
+            }
+
+            if (containers[i].question == string.Empty || containers[i].solution == string.Empty || containers[i].time <= 0f)
+            {
+                Debug.LogError("Either question or solution is empty or time is less then or equal to 0 (TestUI)");
+            }
+
+            helperText.text = string.Empty;
+
+            StartCoroutine(AZAnim.TypeWrite(currentQuestionText, containers[i].question, 2f)); //Type in the question
+
+            //Internal variable, time for a question
+            bool _Finished = false;
+
+            yield return new WaitUntil(() => AZAnim.TypeWritingIsFinished);   //Wait till the type-in animation is finished
+
+            timeAvailable = containers[i].time;   //Personal time for each question
+            timeBarValue = timeAvailable;         //Sets the value of slider to one (full value)               
+            timeBar.gameObject.SetActive(true);   //Slider is visible now
+
+            currentQuestionIndex++; //The question is seen, index increased
+
+            //Limit the answer according to the length of the solution
+            answerField.characterLimit = containers[i].solution.Length;
+
+            checkingAnswer = true;
+            //Starts coroutine which checks user input answer
+            StartCoroutine(CheckAnswer(containers[i].solution, _Finished));
+
+            yield return new WaitForSeconds(timeAvailable); //Wait before next question
+
+            float chance = Random.value;
+            Debug.Log("Chance: " + chance + ", AILevel: " + AILevel.GetValue() + ", Calculation: " + (AILevel.GetValue() / 10.0f - 0.01f * AILevel.GetValue()));
+            //Helds all AI percentage calculations and displays it
+            if (chance <= (AILevel.GetValue() / 10 - 0.01f * AILevel.GetValue()))
+            {
+                AICorrectAnswers = AICorrectAnswers + new SecureInt(1);
+                AICorrectAnswersText.text = "AI: " + AICorrectAnswers.ToString() + "/" + numberOfQuestions;
+            }
+
+            answerField.text = string.Empty; //clear the previous answer
+
+            //Time for question is finished (Passed to "CheckAnswer" coroutine)
+            _Finished = true;
+
+            timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
         }
 
-        else
-        {
-            Debug.LogError("No containers in the list");
-        }
+        StartCoroutine(DisplayResult());
+
     }
-    #endregion
 
-    #region Sub_Coroutines
     IEnumerator CheckAnswer(string solution, bool timeIsFinished)
     {
-        if (solution == string.Empty)
-        {
-            Debug.LogError("No solution for this question assigned");
-        }
 
-        else
+        bool _isAnswerFull = false;
+        //Executes till the time for a question is finished
+        while (timeIsFinished == false)
         {
-            bool _isAnswerFull = false;
-            //Executes till the time for a question is finished
-            while (timeIsFinished == false)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                //If answer is as long as solution is
-                if (answerField.text.Length == solution.Length)
+                //if answer is correct
+                if (answerField.text == solution)
                 {
-                    helperTextAnimator.speed = 1f;
-                    if (_isAnswerFull == false)
-                    {
-                        _isAnswerFull = true;
-                        //Start animation, make the helper text visible
-                        StartCoroutine(HelperTextAnimation());
-                    }
-
-                    if (helperText.text != "ENTER...")
-                    {
-                        helperText.text = "ENTER...";
-                    }
-                }
-                else
-                {
-                    //Delete the helper text
-                    helperText.text = string.Empty;
-                    _isAnswerFull = false;
+                    correctAnswers += new SecureInt(1);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    //if answer is correct
-                    if (answerField.text == solution)
-                    {
-                        correctAnswers += new SecureInt(1);
-                    }
+                StopCoroutine(startExaminationCoroutine);  //Stop coroutine on the question it is on
+                yield return new WaitForSeconds(0.1f);
+                StartCoroutine(startExaminationCoroutine); //Start it again, and currentQuestionIndex fixes it
 
-                    StopCoroutine(startExaminationCoroutine);  //Stop coroutine on the question it is on
-                    yield return new WaitForSeconds(0.05f);
-                    StartCoroutine(startExaminationCoroutine); //Start it again, and currentQuestionIndex fixes it
+                //Turns text into a form of CorrectAnswers/Numer of questions
+                correctAnswersText.text = correctAnswers.ToString() + "/" + numberOfQuestions;
 
-                    //Turns text into a form of Correct Answers/Numer of questions
-                    correctAnswersText.text = correctAnswers.ToString() + "/" + containers.Count.ToString();
-
-                    break;
-                }
-
-                //Will make the loop act as FixedUpdate();
-                yield return new WaitForFixedUpdate();
+                break;
             }
+
+            //If answer is as long as solution is
+            if (answerField.text.Length == solution.Length)
+            {
+                helperTextAnimator.speed = 1f;
+                if (_isAnswerFull == false)
+                {
+                    _isAnswerFull = true;
+
+                    //Start animation, make the helper text visible
+                    StartCoroutine(HelperTextAnimation());
+                }
+
+                helperText.text = "ENTER...";
+            }
+            else
+            {
+                //Delete the helper text
+                helperText.text = string.Empty;
+                _isAnswerFull = false;
+            }
+
+            //Will make the loop act as FixedUpdate();
+            yield return null;
         }
+
     }
 
     IEnumerator HelperTextAnimation()
@@ -253,28 +232,70 @@ public class TestUIManager : MonoBehaviour
         yield return null;
         helperTextAnimator.Play("HelperTextIdle");
     }
-    #endregion
 
-    #region Other_Methods
-
-    void ResetAndExit()
+    IEnumerator DisplayResult()
     {
-        currentQuestionText.text = string.Empty;
-        correctAnswers = new SecureInt(0);
-        currentQuestionIndex = 0;
-
-        if (mainMenuPrefab == null)
-            Debug.LogError("StartMenu is not assigned!");
-
-        //Transition to main menu
-        GameObject _instance;
-        _instance = Instantiate(mainMenuPrefab);
-        _instance.name = mainMenuPrefab.name;
-        _instance = null;
-        Destroy(gameObject);
+        examination.SetActive(false);
+        if (correctAnswers > AICorrectAnswers)
+        {
+            resultText.color = new Color32(9, 255, 21,255);
+            StartCoroutine(AZAnim.TypeWrite(resultText, "CONGRATULATIONS!;" + "YOU WON " + correctAnswers.ToString() + " AGAINST " + AICorrectAnswers.ToString() + " OUT OF " + numberOfQuestions.ToString() + (AILevel.GetValue() == 10 && numberOfQuestions >= 9 ? "!;(Didn't expect that from you :3...)" : "!"), 2));
+        }
+        else if (correctAnswers.GetValue() == AICorrectAnswers.GetValue())
+        {
+            resultText.color = new Color32(255, 248, 9,255);
+            StartCoroutine(AZAnim.TypeWrite(resultText, "It's a " + correctAnswers.ToString() + " to " + numberOfQuestions.ToString() + " DRAW" + (AILevel.GetValue() == 10 && numberOfQuestions >= 9 ? "!;(You were pretty good at this though xD)" : "..."), 2));
+        }
+        else
+        {
+            resultText.color = new Color32(255, 11, 11, 255);
+            if (AILevel.GetValue() > 1)
+            {
+                StartCoroutine(AZAnim.TypeWrite(resultText, "Hmm..." + ";You lost " + numberOfQuestions.ToString() + " against " + correctAnswers.ToString() + ",;with " + numberOfQuestions + " questions total" + (AILevel.GetValue() == 10 && numberOfQuestions >= 9 ? "...;(Dont worry, I know conditions;weren't fair on this one)" : "..."), 2));
+            }
+            else
+            {
+                StartCoroutine(AZAnim.TypeWrite(resultText, "Hmmmmm..." + ";You lost " + AILevel.ToString() + " against " + correctAnswers.ToString() + ",;with " + numberOfQuestions + " questions total..." + ";I really think you;could've done better...", 2));
+            }
+        }
+        yield return new WaitUntil(() => AZAnim.TypeWritingIsFinished);
+        yield return new WaitForSeconds(3.5f);
+        ReturnToMenu();
     }
-    #endregion
 
+    void SetRndIntsList()
+    {
+        int _subNumber = Random.Range(0, containers.Count);
+
+        //Set a List of random numbers, with Lenght equal to number of quesions
+        for (int i = 0; i < containers.Count; i++)
+        {
+            while (rndInts.Contains(_subNumber))
+            {
+                _subNumber = Random.Range(0, containers.Count);
+            }
+            rndInts.Add(_subNumber);
+        }
+    }
+
+    //Transitions within the prefab
+    void MakeInternalTransition(GameObject toObject, GameObject fromObject)
+    {
+        toObject.SetActive(true);
+        fromObject.SetActive(false);
+    }
+
+    //Calculation to convert scrollbar value from 1 to 10
+
+    int GetScrollBarValue(Scrollbar sb)
+    {
+        int finalCalculation = Mathf.FloorToInt(sb.value * 10);
+        if (finalCalculation != 10)
+        {
+            finalCalculation++;
+        }
+        return finalCalculation;
+    }
     #endregion
 
     //Public methods for events
@@ -284,7 +305,70 @@ public class TestUIManager : MonoBehaviour
         string _limitedInput = AZAnim.LimitString(answerField.text, 0, -1, true);
         answerField.text = _limitedInput;
     }
+
+    public void ReturnToMenu()
+    {
+        //Transition to main menu
+        GameObject _instance;
+        _instance = Instantiate(mainMenuPrefab);
+        _instance.name = mainMenuPrefab.name;
+        Destroy(gameObject);
+    }
+
+    public void PVEButton()
+    {
+        MakeInternalTransition(PVEModeSettings, modeChoice);
+        numberOfQuestionsNumberText = numberOfQuestionsScrollbar.GetComponentInChildren<Text>();
+        AILevelNumberText = AILevelScrollbar.GetComponentInChildren<Text>();
+        AILevelNumberText.text = GetScrollBarValue(AILevelScrollbar).ToString();
+        numberOfQuestionsNumberText.text = GetScrollBarValue(numberOfQuestionsScrollbar).ToString();
+    }
+
+    public void PVPButton()
+    {
+        //MakeInternalTransition(PVPModeSettings, modeChoice);
+    }
+
+    public void SubmitButton()
+    {
+        if (PVEModeSettings.activeSelf == true /*&& PVPModeSettings.activeSelf== true*/) MakeInternalTransition(examination, PVEModeSettings);
+        //else MakeInternalTransition(examination, PVPwModeSettings);
+        SetRndIntsList();
+
+        //Load all the variables
+        correctAnswers = new SecureInt(0);
+        AICorrectAnswers = new SecureInt(0);
+        numberOfQuestions = GetScrollBarValue(numberOfQuestionsScrollbar);
+        AILevel = new SecureFloat(GetScrollBarValue(AILevelScrollbar));
+
+        helperTextAnimator.speed = 0f;
+
+        answerField.ActivateInputField();         //Focus on input field
+        Cursor.visible = false;                   //Cursor is not visible
+        Cursor.lockState = CursorLockMode.Locked; //Lock the cursor in the middle
+
+        //Coroutine is stored in a variable, with all attributes assigned
+        startExaminationCoroutine = StartExamination();
+        StartCoroutine(startExaminationCoroutine); //Starts the coroutine
+        //Turns text into a form of AICorrectAnswers/Numer of questions
+         AICorrectAnswersText.text = "AI: " + AICorrectAnswers.ToString() + "/" + numberOfQuestions;
+        //Turns text into a form of CorrectAnswers/Numer of questions
+        correctAnswersText.text = correctAnswers.ToString() + "/" + numberOfQuestions;
+
+        timeBar.gameObject.SetActive(false); //To refer to some features of UI element, you need too refer to it's "gameObject" property
+
+        //Clears the helper text
+        helperText.text = string.Empty;
+    }
+
+    public void NumberOfQuestionsScrollBar()
+    {
+       numberOfQuestionsNumberText.text = GetScrollBarValue(numberOfQuestionsScrollbar).ToString();
+    }
+
+    public void AILevelScrollBar()
+    {
+        AILevelNumberText.text = GetScrollBarValue(AILevelScrollbar).ToString();
+    }
     #endregion
-
-
 }

@@ -6,15 +6,17 @@ using UnityEngine.SceneManagement;
 public class LoadingScreenManager : MonoBehaviour
 {
     [SerializeField]
-    Image fillImg;     //Image to fill reltive to progress
+    Image fillImg;      //Image to fill reltive to progress
     [SerializeField]
     Text progressText;  //Percentage progress text
 
     float i = 0;
-
+    private void Awake()
+    {
+        Screen.SetResolution(1920, 1080, false);
+    }
     private void Start()
     {
-        Screen.fullScreen = true;
         StartCoroutine(AsyncSceneLoad());
     }
 

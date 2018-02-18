@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 224485725320986834}
   - component: {fileID: 222650431063505744}
   - component: {fileID: 114472733001705212}
+  - component: {fileID: 95979091682562552}
   m_Layer: 5
   m_Name: ResultText
   m_TagString: Untagged
@@ -462,6 +463,7 @@ GameObject:
   - component: {fileID: 224238047290869404}
   - component: {fileID: 222290345851665938}
   - component: {fileID: 114326116789226470}
+  - component: {fileID: 95731871005008992}
   m_Layer: 5
   m_Name: PVEModeSettings
   m_TagString: Untagged
@@ -563,6 +565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224717256125748634}
   - component: {fileID: 222246956021970642}
+  - component: {fileID: 95602922767393596}
   m_Layer: 5
   m_Name: Examination
   m_TagString: Untagged
@@ -597,6 +600,7 @@ GameObject:
   - component: {fileID: 224764519117448398}
   - component: {fileID: 222389165203223966}
   - component: {fileID: 114216126773643560}
+  - component: {fileID: 95880092010194300}
   m_Layer: 5
   m_Name: ModeChoice
   m_TagString: Untagged
@@ -695,7 +699,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1044267726403600}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 175.66698, y: -13.19999, z: -1.8703243}
+  m_LocalPosition: {x: 175.667, y: -13.19999, z: -1.870324}
   m_LocalScale: {x: 0.99750626, y: 0.99750626, z: 0.99750626}
   m_Children:
   - {fileID: 224457442793627104}
@@ -715,6 +719,74 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 59aeb720c9e4fe04e8ffb189d8effe0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95602922767393596
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874300649423186}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: faef57ef54147124abb341e10c4dc909, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95731871005008992
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708568576760096}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 27bad3910dd61cd4aa15e437b18bf04a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95880092010194300
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883639603921598}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be80b6dc4422c864e978df085611897b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95979091682562552
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562806368661506}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e285ff1a5d728041ad4a3dcd1302d5d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1133,7 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.12941177}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1259,7 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.12941177}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1467,7 +1539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1527,7 +1599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.109}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1909,7 +1981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19852942, g: 0.19852942, b: 0.19852942, a: 1}
+  m_Color: {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 0.54509807}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2080,7 +2152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 0.591}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2157,25 +2229,63 @@ MonoBehaviour:
       not n1 is not None:;    n1 = 0.565;    print(float(int(n1) + 3000))    '
     solution: 3000.0
     time: 42
-  - question: 1+1
-    solution: 2
-    time: 5
-  - question: 2+2
-    solution: 4
-    time: 5
-  - question: 3+3
-    solution: 6
-    time: 5
-  - question: 4+4
+  - question: Error detected during execution is called...?
+    solution: exception
+    time: 15
+  - question: What will be the output of the following code?;;print(2 ** 5 * (24 //
+      5) * (1.25 % 0.5))
+    solution: 32.0
+    time: 15
+  - question: Fill in the blanks:;;Some examples of numbers that are represented;as
+      ______ are 0.5 and -7.8237591
+    solution: floats
+    time: 10
+  - question: Which of these will not be stored as a float (pick a letter)?;;a)14
+      / 2;b)7.0;c)23 // 3;d)float(int("7"));e)0 + 7.0
+    solution: c
+    time: 12.5
+  - question: What will be the output of the following code?;;>>> print(int(3 + 3
+      + 2.9))
     solution: 8
-    time: 5
-  - question: 5+5
-    solution: 10
-    time: 5
-  - question: 6+6
-    solution: 12
-    time: 5
-  rndInts: 
+    time: 10
+  - question: Fill in the blanks:;;Some characters can't be directly included in a
+      string.;For instance, double quotes can't be directly included in a double quote
+      string;this would cause it to end prematurely.;Characters like these must be
+      escaped by placing a _________ before them.
+    solution: backslash
+    time: 22.5
+  - question: What will the following code print?;;>>> print('\\\'\s\\')
+    solution: \'\s\
+    time: 13.5
+  - question: Fill in the blanks:;;In a string, __ represents a new line.
+    solution: \n
+    time: 10
+  - question: Write THREE characters, to create a string,;containing a single quote
+      followed by double quote.  >>> s = "___"
+    solution: '''\"'
+    time: 15
+  - question: In Python, instead of writing \n many times, we can write a string with
+      {0} sets of quotes,;and it will act as a block of text;(Place a NUMBER)
+    solution: 3
+    time: 12.5
+  - question: What is the missing word?;;A _____ function displays a textual representation
+      of something to the screen.
+    solution: print
+    time: 11.5
+  - question: What is the output of this code?;;>>> print('print("print(300.0)")')
+    solution: print("print(300.0)")
+    time: 20
+  - question: Write a code to prompt for user input,;displaying empty message/string
+    solution: input("")
+    time: 15
+  - question: Concatenation is a process of...;a) Converting integer to float value,
+      which is done automatically by python;b) Recursive repeat of the code in the
+      function;c) Addition of two or more strings together
+    solution: c
+    time: 14
+  - question: What is the output?;;>>> print(float(2 * '6') + int('2'+'2'))
+    solution: 88.0
+    time: 18
   mainMenuPrefab: {fileID: 1136967967314380, guid: 901946467c6ae324896f54efea10cceb,
     type: 2}
   modeChoice: {fileID: 1883639603921598}
@@ -2203,7 +2313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19852942, g: 0.19852942, b: 0.19852942, a: 1}
+  m_Color: {r: 0.07352942, g: 0.07352942, b: 0.07352942, a: 0.547}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2634,7 +2744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4.899999}
   m_SizeDelta: {x: 330.25, y: 250.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224248245807668018
@@ -2894,7 +3004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 22.9, y: -47.2}
+  m_AnchoredPosition: {x: 19, y: -44.771286}
   m_SizeDelta: {x: 408.94, y: 152.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224717256125748634
@@ -2914,7 +3024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4.899999}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224752653049310282
@@ -2972,7 +3082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4.899999}
   m_SizeDelta: {x: 210.70001, y: 102.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224796608620567390

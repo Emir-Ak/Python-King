@@ -80,10 +80,7 @@ public class SystemMenu : MonoBehaviour
     public void ReturnButton()
     {
         //Transition to main menu    
-        GameObject _instance;                     //Create internal variable of type GameObject
-        _instance = Instantiate(mainMenuPrefab);  //Instantiate prefab, assign it to the variable
-        //This is used to get rid of the "(Clone)" part in the name, to keep hierarchy tidy
-        _instance.name = mainMenuPrefab.name;     //Rename it to original name
+        Instantiate(mainMenuPrefab); 
         SaveInput();
         Destroy(gameObject);
     }

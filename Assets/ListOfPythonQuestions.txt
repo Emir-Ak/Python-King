@@ -1,0 +1,51 @@
+Fill in the blanks:
+Error detected during execution is called _________ - exception
+
+What will be the output of the following code?
+print(2 ** 5 * (24 // 5) * (1.25 % 0.5)) - 32.0
+
+Fill in the blanks:
+Some examples of numbers that are represented as ______ are 0.5 and -7.8237591. - floats
+
+Which of these will not be stored as a float? - c
+a)14 / 2
+b)7.0
+c)23 // 3
+d)float(int("7"))
+e)0 + 7.0
+
+What will be the output of the following code? - 8
+>>> print(int(3 + 3 + 2.9))
+
+Fill in the blanks:
+Some characters can't be directly included in a string. For instance, double quotes can't be directly included in a double quote string; 
+this would cause it to end prematurely. 
+Characters like these must be escaped by placing a _________ before them. - backslash (\)
+
+What will the following code print? - \'\s\
+>>> print('\\\'\s\\')
+
+Fill in the blanks:
+__ represents a new line. - \n
+Fill in the blanks with THREE characters, to create a string containing a single quote
+followed by double quote. - '\"
+>>> "___" 
+
+In Python, instead of writing \n many times, we can write a string with {0} sets of quotes,
+and it will act as a block of text - 3
+
+What is the missing word?
+_____ function displays a textual representation of something to the screen. - print
+
+What is the output of this code? - print("print(300.0)")
+>>> print('print("print(300.0)")')
+
+Write a code to prompt for user input, displaying empty message/string - input("")
+
+Concatenation is a process of...
+a) Converting integer to float value, which is done automatically by python
+b) Recursive repeat of the code in the function
+c) Addition of two or more strings together
+
+What is the output?
+>>> print(float(2 * '6') + int('2'+'2')) - 88.0

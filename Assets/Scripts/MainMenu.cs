@@ -11,8 +11,8 @@ public class MainMenu : MonoBehaviour
     GameObject testUIPrefab;
     [SerializeField]
     GameObject systemMenuPrefab;
-    //[SerializeField]  -Uncomment when log prefab is ready
-    //logMenuPrefab     -Uncomment when log prefab is ready
+    [SerializeField]
+    GameObject logMenuPrefab;
 
     [SerializeField]
     AudioMixer audioMixer;
@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     }
     public void LogButton()
     {
-        //MakeTransition(logMenuPrefab);  -Uncomment when log prefab is ready
+        MakeTransition(logMenuPrefab); 
     }
     public void BreakButton()
     {
@@ -58,7 +58,7 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         LoadInput();
 
         foreach (Button button in buttons)
@@ -80,10 +80,7 @@ public class MainMenu : MonoBehaviour
     //Used for transition buttons
     void MakeTransition(GameObject prefab)
     {
-        //This is used to get rid of the "(Clone)" part in the name, to keep hierarchy tidy
-        GameObject _instance;
-        _instance = Instantiate(prefab);
-        _instance.name = prefab.name;
+        Instantiate(prefab);
         Destroy(gameObject);
     }
     #endregion

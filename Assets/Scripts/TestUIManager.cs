@@ -9,7 +9,7 @@ public class TestUIManager : MonoBehaviour
     //Declaration of class-wide variables
     #region VARIABLES
     public List<QAContainer> containers = new List<QAContainer>();
-    public List<int> rndInts = new List<int>();
+    List<int> rndInts = new List<int>();
 
     [SerializeField]
     GameObject mainMenuPrefab;
@@ -153,9 +153,11 @@ public class TestUIManager : MonoBehaviour
             yield return new WaitForSeconds(timeAvailable); //Wait before next question
 
             float chance = Random.value;
+
             Debug.Log("Chance: " + chance + ", AILevel: " + AILevel.GetValue() + ", Calculation: " + (AILevel.GetValue() / 10.0f - 0.01f * AILevel.GetValue()));
+
             //Helds all AI percentage calculations and displays it
-            if (chance <= (AILevel.GetValue() / 10 - 0.01f * AILevel.GetValue()))
+            if (chance > (1 - (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.05f : 0) * AILevel.GetValue())))
             {
                 AICorrectAnswers = AICorrectAnswers + new SecureInt(1);
                 AICorrectAnswersText.text = "AI: " + AICorrectAnswers.ToString() + "/" + numberOfQuestions;
@@ -309,9 +311,7 @@ public class TestUIManager : MonoBehaviour
     public void ReturnToMenu()
     {
         //Transition to main menu
-        GameObject _instance;
-        _instance = Instantiate(mainMenuPrefab);
-        _instance.name = mainMenuPrefab.name;
+        Instantiate(mainMenuPrefab);
         Destroy(gameObject);
     }
 

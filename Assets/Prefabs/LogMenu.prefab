@@ -228,7 +228,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'DeserIsle Studio
 
-    DEVELOPER: Emir Akbashev
+    DEVELOPERS: Emir Akbashev,
+
+    Stephan Dvoryanchikov
 
     BUILD: Alpha 1.1
 
@@ -363,6 +365,8 @@ MonoBehaviour:
 
 
     WILL BE DEVELOPED BY:
+
+    (Dont mind this text he just likes to ''show off'')
 
 
     <size=25px>EMIR AKBASHEV</size>

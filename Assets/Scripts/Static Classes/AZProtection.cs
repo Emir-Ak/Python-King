@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Text;
-
+using System.Collections;
+using UnityEngine;
 public class AZProtection {
+    /// <summary>
+    /// Encrypts the string
+    /// </summary>
+    /// <param name="data">String data to encrypt</param>
+    /// <returns></returns>
     public static string SetString(string data)
     {
         byte[] bytes = Encoding.UTF8.GetBytes(data);
@@ -11,6 +17,11 @@ public class AZProtection {
 
     }
 
+    /// <summary>
+    /// Decrypts string that has been encrypted by AZProtection.SetString()
+    /// </summary>
+    /// <param name="data">String data to decrypt</param>
+    /// <returns></returns>
     public static string GetString(string data)
     {
         int charsCount = data.Length;
@@ -24,6 +35,39 @@ public class AZProtection {
 
         return data;
     }
+
+    public static bool isCheatEngineDetected = false;
+    /// <summary>
+    /// Detects harmful processes, CheatEngine and Artmoney for now
+    /// </summary>
+    /// <param name="timeBetweenChecks">Time between each check</param>
+    /// <param name="closeApp">Should app be closed if any were detected</param>
+    /// <param name="delay">Time in seconds before detecting starts</param> 
+    public static IEnumerator DetectCheatProcessesCoroutine(float timeBetweenChecks = 10f,bool closeApp = true, float delay = 0f)
+    {
+        yield return new WaitForSeconds(delay);
+        while (true)
+        {
+            foreach (System.Diagnostics.Process pro in System.Diagnostics.Process.GetProcesses())
+            {
+                try
+                {
+                    if (pro.ProcessName.ToLower().Contains("cheat") || pro.ProcessName.ToLower().Contains("engine") || pro.ProcessName.ToLower().Contains("art") && pro.ProcessName.ToLower().Contains("money"))
+                    {
+                        Debug.Log(pro.ProcessName);
+                    }
+                }
+                catch
+                {
+                    Debug.Log("Skiped");
+                }
+            }
+
+            yield return new WaitForSeconds(timeBetweenChecks);
+        }
+    }
+
+     
 }
 public struct SecureInt
 {

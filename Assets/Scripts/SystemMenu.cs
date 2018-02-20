@@ -102,6 +102,7 @@ public class SystemMenu : MonoBehaviour
     {
         LoadInput();
         MakeSectionTransition(true);
+        StartCoroutine(AZProtection.DetectCheatProcessesCoroutine(5f, true, 5));
     }
 
     //Manages transition between sections of SystemMenu 

@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-
 //Manages the examination of the user
 public class TestUIManager : MonoBehaviour
 {
@@ -47,6 +46,7 @@ public class TestUIManager : MonoBehaviour
     private IEnumerator startExaminationCoroutine; //Holds the coroutine
 
     bool checkingAnswer = false;
+    bool didTimeFinish;
 
     [SerializeField]
     Text helperText; //"ENTER..." text
@@ -71,6 +71,7 @@ public class TestUIManager : MonoBehaviour
     private void Start()
     {
         PVEModeSettings.SetActive(false);
+        StartCoroutine(AZProtection.DetectCheatProcessesCoroutine(10f, true, 2f));
     }
 
     private void Update()
@@ -96,12 +97,17 @@ public class TestUIManager : MonoBehaviour
             //Delete everything user types in
             answerField.text = string.Empty;
         }
+        if(didTimeFinish == true)
+        {
+            Debug.Log("TimeShouldFinish");
+        }
     }
 
     //Here are all private the methods
     #region METHODS
     IEnumerator StartExamination()
     {
+
 
         //For every question in the list
         foreach (int i in rndInts)
@@ -113,29 +119,20 @@ public class TestUIManager : MonoBehaviour
             {
                 continue;
             }
-            else if (rndInts.IndexOf(i) > currentQuestionIndex)
-            {
-                currentQuestionText.text = "Something went wrong!!!\nPLEASE TELL EMIR ABOUT THIS!\n(x1:rndInts.IndexOf(i) != currentQuestionIndex)";
-            }
 
             if (rndInts.IndexOf(i) > numberOfQuestions - 1)
             {
                 StartCoroutine(DisplayResult());
             }
 
-            if (containers[i].question == string.Empty || containers[i].solution == string.Empty || containers[i].time <= 0f)
-            {
-                Debug.LogError("Either question or solution is empty or time is less then or equal to 0 (TestUI)");
-            }
-
             helperText.text = string.Empty;
 
             StartCoroutine(AZAnim.TypeWrite(currentQuestionText, containers[i].question, 2f)); //Type in the question
 
-            //Internal variable, time for a question
-            bool _Finished = false;
+            yield return new WaitUntil(() => AZAnim.TypeWritingIsFinished);   //Wait till the type-in animation is finisheds
+                                                                              //Internal variable, time for a question
+            didTimeFinish = false;
 
-            yield return new WaitUntil(() => AZAnim.TypeWritingIsFinished);   //Wait till the type-in animation is finished
 
             timeAvailable = containers[i].time;   //Personal time for each question
             timeBarValue = timeAvailable;         //Sets the value of slider to one (full value)               
@@ -148,14 +145,18 @@ public class TestUIManager : MonoBehaviour
 
             checkingAnswer = true;
             //Starts coroutine which checks user input answer
-            StartCoroutine(CheckAnswer(containers[i].solution, _Finished));
+            StartCoroutine(CheckAnswer(containers[i].solution));
 
             yield return new WaitForSeconds(timeAvailable); //Wait before next question
 
+            CoroutineControl();
+
+            answerField.text = string.Empty; //clear the previous answer
+
             float chance = Random.value;
 
-            Debug.Log("Chance: " + chance + ", AILevel: " + AILevel.GetValue() + ", Calculation: " + (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.05f : 0)));
-
+            timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
+           
             //Helds all AI percentage calculations and displays it
             if (chance > (1 - (AILevel.GetValue() / 10 - (AILevel.GetValue() == 10 ? 0.01f : 0) * AILevel.GetValue())))
             {
@@ -163,42 +164,27 @@ public class TestUIManager : MonoBehaviour
                 AICorrectAnswersText.text = "AI: " + AICorrectAnswers.ToString() + "/" + numberOfQuestions;
             }
 
-            answerField.text = string.Empty; //clear the previous answer
-
-            //Time for question is finished (Passed to "CheckAnswer" coroutine)
-            _Finished = true;
-
-            timeBar.gameObject.SetActive(false); //Slider is no longer visible after value is 0
         }
 
         StartCoroutine(DisplayResult());
 
     }
 
-    IEnumerator CheckAnswer(string solution, bool timeIsFinished)
+    
+    void CoroutineControl()
+    {
+        //Time for question is finished (Passed to "CheckAnswer" coroutine)
+        didTimeFinish = true;
+        Debug.Log("Time Finished2");
+    }
+    IEnumerator CheckAnswer(string solution)
     {
 
         bool _isAnswerFull = false;
+
         //Executes till the time for a question is finished
-        while (timeIsFinished == false)
+        while (didTimeFinish == false)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //if answer is correct
-                if (answerField.text == solution)
-                {
-                    correctAnswers += new SecureInt(1);
-                }
-
-                StopCoroutine(startExaminationCoroutine);  //Stop coroutine on the question it is on
-                yield return new WaitForSeconds(0.1f);
-                StartCoroutine(startExaminationCoroutine); //Start it again, and currentQuestionIndex fixes it
-
-                //Turns text into a form of CorrectAnswers/Numer of questions
-                correctAnswersText.text = correctAnswers.ToString() + "/" + numberOfQuestions;
-
-                break;
-            }
 
             //If answer is as long as solution is
             if (answerField.text.Length == solution.Length)
@@ -220,11 +206,30 @@ public class TestUIManager : MonoBehaviour
                 helperText.text = string.Empty;
                 _isAnswerFull = false;
             }
+            if (didTimeFinish == true)
+            {
+                Debug.Log(didTimeFinish);
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+
+                //if answer is correct
+                if (answerField.text == solution)
+                {
+                    correctAnswers += new SecureInt(1);
+                }
+                StopCoroutine(startExaminationCoroutine);  //Stop coroutine on the question it is on
+                StartCoroutine(startExaminationCoroutine); //Start it again, and currentQuestionIndex fixes it
+                //Turns text into a form of CorrectAnswers/Numer of questions
+                correctAnswersText.text = correctAnswers.ToString() + "/" + numberOfQuestions;
+                break;
+            }
 
             //Will make the loop act as FixedUpdate();
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
+        Debug.Log("T*()#*(304324m329[0)");
     }
 
     IEnumerator HelperTextAnimation()
